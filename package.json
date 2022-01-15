@@ -1,0 +1,23 @@
+{
+  "name": "darkness",
+  "version": "1.0.0",
+  "description": "Game motor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EstebanOlmedo/special-palm-tree.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EstebanOlmedo/special-palm-tree/issues"
+  },
+  "homepage": "https://github.com/EstebanOlmedo/special-palm-tree#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.8",
+    "typescript": "^4.5.4"
+  }
+}
