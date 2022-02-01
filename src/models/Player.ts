@@ -1,7 +1,7 @@
 import {Message} from './Message';
 import Arrow from './Arrow';
 import {Piece} from './Piece';
-import {Roulette} from './Roulette';
+import Roulette from './Roulette';
 
 export default class Player {
   name: string;
