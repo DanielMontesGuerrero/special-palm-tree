@@ -8,9 +8,9 @@ export default class Board {
 
   balls: Ball[];
 
-  constructor(board: Board) {
-    this.matrix = board.matrix;
-    this.lastUpdate = board.lastUpdate;
-    this.balls = board.balls;
+  constructor(height: number, width: number) {
+    this.matrix = new Matrix(height, width);
+    this.lastUpdate = 0;
+    this.balls = [];
   }
 }
