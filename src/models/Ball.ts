@@ -10,15 +10,14 @@ export default class Ball {
 
   direction: Vector2;
 
-  constructor(ball: Ball) {
-    this.type = ball.type;
-    this.position = ball.position;
-    this.speed = ball.speed;
-    this.direction = ball.direction;
+  constructor(type: PieceType, position: Vector2, speed: number, direction: Vector2) {
+    this.type = type;
+    this.position = position;
+    this.speed = speed;
+    this.direction = direction.makeUnit();
   }
 
-  move(dx: number) {
-    this.position.x += this.direction.x * this.speed * dx;
-    this.position.y += this.direction.y * this.speed * dx;
+  move(dt: number) {
+    this.position.add(this.direction.copy().multiply(this.speed * dt));
   }
 }
