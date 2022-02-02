@@ -1,5 +1,6 @@
 import {PieceType} from './Piece';
 import Vector2 from './Vector2';
+import Matrix from './Matrix';
 
 export default class Ball {
   type: PieceType;
@@ -19,5 +20,12 @@ export default class Ball {
 
   move(dt: number) {
     this.position.add(this.direction.copy().multiply(this.speed * dt));
+  }
+
+  checkCollision(matrix: Matrix) {
+    const i = Math.floor(this.position.x);
+    const j = Math.floor(this.position.y);
+    if (matrix.isOutOfBounds(i, j)) return false;
+    return matrix.get(i, j).isAlive();
   }
 }

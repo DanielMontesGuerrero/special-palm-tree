@@ -1,4 +1,5 @@
 import Ball from '../src/models/Ball';
+import Matrix from '../src/models/Matrix';
 import {PieceType} from '../src/models/Piece';
 import Vector2 from '../src/models/Vector2';
 
@@ -15,5 +16,17 @@ describe('Ball', () => {
     expect(ball.position.length()).toBeCloseTo(5.5);
     expect(ball.position.x).toBeCloseTo(3.88908);
     expect(ball.position.y).toBeCloseTo(-3.88908);
+  });
+
+  test('checkCollision', () => {
+    const ball = new Ball(PieceType.KING, new Vector2(3.5, 9.9999), 1, new Vector2(1, 1));
+    const matrix = new Matrix(10, 10);
+    expect(ball.checkCollision(matrix)).toBe(true);
+
+    matrix.get(3, 9).health = 0;
+    expect(ball.checkCollision(matrix)).toBe(false);
+
+    ball.position = new Vector2(-7, -12);
+    expect(ball.checkCollision(matrix)).toBe(false);
   });
 });
