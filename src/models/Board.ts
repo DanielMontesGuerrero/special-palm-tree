@@ -1,26 +1,16 @@
 import Ball from './Ball';
-import Cell from './Cell';
+import Matrix from './Matrix';
 
 export default class Board {
-  width: number;
-
-  height: number;
-
   lastUpdate: number;
 
-  cells: Cell[][];
+  matrix: Matrix;
 
   balls: Ball[];
 
-  constructor(board: Board) {
-    this.width = board.width;
-    this.height = board.height;
-    this.cells = board.cells;
-    this.lastUpdate = board.lastUpdate;
-    this.balls = board.balls;
-  }
-
-  getCell(i: number, j: number): Cell {
-    return this.cells[i][j];
+  constructor(height: number, width: number) {
+    this.matrix = new Matrix(height, width);
+    this.lastUpdate = 0;
+    this.balls = [];
   }
 }

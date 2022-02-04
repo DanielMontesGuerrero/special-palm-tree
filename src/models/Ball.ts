@@ -1,5 +1,6 @@
 import {PieceType} from './Piece';
 import Vector2 from './Vector2';
+import Matrix from './Matrix';
 
 export default class Ball {
   type: PieceType;
@@ -10,15 +11,21 @@ export default class Ball {
 
   direction: Vector2;
 
-  constructor(ball: Ball) {
-    this.type = ball.type;
-    this.position = ball.position;
-    this.speed = ball.speed;
-    this.direction = ball.direction;
+  constructor(type: PieceType, position: Vector2, speed: number, direction: Vector2) {
+    this.type = type;
+    this.position = position;
+    this.speed = speed;
+    this.direction = direction.makeUnit();
   }
 
-  move(dx: number) {
-    this.position.x += this.direction.x * this.speed * dx;
-    this.position.y += this.direction.y * this.speed * dx;
+  move(dt: number) {
+    this.position.add(this.direction.copy().multiply(this.speed * dt));
+  }
+
+  checkCollision(matrix: Matrix) {
+    const i = Math.floor(this.position.x);
+    const j = Math.floor(this.position.y);
+    if (matrix.isOutOfBounds(i, j)) return false;
+    return matrix.get(i, j).isAlive();
   }
 }
