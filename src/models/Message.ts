@@ -5,7 +5,7 @@ export enum MessageType {
     WARNING,
 }
 
-export class Message {
+export default class Message {
   content: string;
 
   type: MessageType;
