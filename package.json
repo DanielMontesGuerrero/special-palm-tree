@@ -34,6 +34,7 @@
     "verbose": true,
     "transform": {
       "^.+\\.ts?$": "ts-jest"
-    }
+    },
+    "setupFilesAfterEnv": ["./test/Setup.ts"]
   }
 }
