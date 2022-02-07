@@ -27,4 +27,18 @@ export default class Matrix {
   get(i: number, j: number) {
     return this.matrix[i][j];
   }
+
+  /*
+   * Player id depends on the quadrant
+   * -----
+   * |0|1|
+   * -----
+   * |2|3|
+   * -----
+   */
+  getPlayerId(i: number, j: number) {
+    const rowSide = i >= this.rows / 2;
+    const colSide = j >= this.cols / 2;
+    return 1 * (colSide ? 1 : 0) + 2 * (rowSide ? 1 : 0);
+  }
 }
