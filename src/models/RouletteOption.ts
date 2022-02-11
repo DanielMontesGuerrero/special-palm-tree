@@ -72,7 +72,7 @@ export const RouletteSets = {
     }),
     new RouletteOption('Increase arrow speed', 0.1, (ctx: RouletteActionContext) => {
       ctx.arrow.angularSpeed = Math.min(
-        ctx.arrow.maxAngularSpeed,
+        Arrow.maxAngularSpeed,
         ctx.arrow.angularSpeed + RouletteSetsConfig.DEFAULT.increasedAngularSpeed,
       );
     }),
