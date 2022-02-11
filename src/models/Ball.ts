@@ -11,6 +11,8 @@ export default class Ball {
 
   direction: Vector2;
 
+  static maxSpeed = 2;
+
   constructor(type: PieceType, position: Vector2, speed: number, direction: Vector2) {
     this.type = type;
     this.position = position;

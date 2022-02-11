@@ -1,4 +1,13 @@
-import {CollisionContext, PieceType} from './types';
+import {PieceType} from './types';
+import Matrix from './Matrix';
+
+export interface CollisionContext {
+  row: number;
+  col: number;
+  matrix: Matrix;
+  playerId: number;
+  pieceType: PieceType;
+}
 
 export const stats = {
   QUEEN: {

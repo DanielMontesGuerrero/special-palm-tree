@@ -1,18 +1,15 @@
-import Matrix from './Matrix';
-
 export enum PieceType {
     KING,
     QUEEN,
-    KNIGHT,
     BISHOP,
-    PAWN,
+    KNIGHT,
     ROOK,
+    PAWN,
 }
 
-export interface CollisionContext {
-  row: number;
-  col: number;
-  matrix: Matrix;
-  playerId: number;
-  pieceType: PieceType;
+export enum MessageType {
+    INFO,
+    WIN,
+    LOOSE,
+    WARNING,
 }
