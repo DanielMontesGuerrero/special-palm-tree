@@ -1,6 +1,8 @@
 import RouletteOption, {RouletteActionContext, RouletteSets} from './RouletteOption';
 
 export default class Roulette {
+  static rouletteDelay = 3000;
+
   lastTriggered: number;
 
   options: RouletteOption[];
@@ -24,7 +26,9 @@ export default class Roulette {
   }
 
   onTrigger(ctx: RouletteActionContext) {
-    const selectedOptions = this.getOption();
-    this.options[selectedOptions].action(ctx);
+    if ((ctx.triggeredAt - this.lastTriggered) >= Roulette.rouletteDelay) {
+      const selectedOptions = this.getOption();
+      this.options[selectedOptions].action(ctx);
+    }
   }
 }

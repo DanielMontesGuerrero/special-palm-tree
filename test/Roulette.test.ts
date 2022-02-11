@@ -21,6 +21,7 @@ describe('Roulette', () => {
       arrow: new Arrow(),
       board: new Board(10, 10),
       playerId: 1,
+      triggeredAt: Date.now(),
     };
 
     /* -- Take piece -- */

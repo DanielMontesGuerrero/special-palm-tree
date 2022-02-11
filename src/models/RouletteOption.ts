@@ -10,6 +10,7 @@ export interface RouletteActionContext {
   arrow: Arrow;
   board: Board;
   playerId: number;
+  triggeredAt: number;
 }
 
 export default class RouletteOption {
