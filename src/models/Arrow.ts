@@ -10,7 +10,7 @@ export default class Arrow {
 
   angularSpeed: number;
 
-  maxAngularSpeed = 2 * Math.PI;
+  static maxAngularSpeed = 2 * Math.PI;
 
   constructor(
     angle: number = DefaultVaules.angle,
