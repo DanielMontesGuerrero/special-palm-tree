@@ -1,9 +1,4 @@
-export enum MessageType {
-    INFO,
-    WIN,
-    LOOSE,
-    WARNING,
-}
+import {MessageType} from './types';
 
 export default class Message {
   content: string;
