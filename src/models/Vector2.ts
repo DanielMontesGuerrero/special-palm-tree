@@ -40,4 +40,16 @@ export default class Vector2 {
     this.y /= length;
     return this;
   }
+
+  mod(dimX: number, dimY: number) {
+    if (this.x < 0) {
+      this.x += (dimX * Math.abs(Math.ceil(this.x / dimX)));
+    }
+    if (this.y < 0) {
+      this.y += (dimY * Math.abs(Math.ceil(this.y / dimY)));
+    }
+    this.x -= dimX * Math.floor(this.x / dimX);
+    this.y -= dimY * Math.floor(this.y / dimY);
+    return this;
+  }
 }

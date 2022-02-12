@@ -43,4 +43,14 @@ describe('Vector2', () => {
     vector.makeUnit();
     expect(vector.length()).toBe(1);
   });
+
+  test('mod', () => {
+    let vector = new Vector2(-14, 478);
+    vector.mod(3, 7);
+    expect(vector).toBeVector2(new Vector2(1, 2));
+
+    vector = new Vector2(5.95, -10.99);
+    vector.mod(4, 5);
+    expect(vector).toBeVector2(new Vector2(1.95, 4.01));
+  });
 });
