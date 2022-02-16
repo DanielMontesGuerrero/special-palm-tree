@@ -1,4 +1,5 @@
 import Cell from './Cell';
+import Vector2 from './Vector2';
 
 export default class Matrix {
   rows: number;
@@ -40,5 +41,15 @@ export default class Matrix {
     const rowSide = i >= this.rows / 2;
     const colSide = j >= this.cols / 2;
     return 1 * (colSide ? 1 : 0) + 2 * (rowSide ? 1 : 0);
+  }
+
+  getPlayerCoords(playerId: number) {
+    switch (playerId) {
+      case 0: return new Vector2(this.cols / 4, this.rows / 4);
+      case 1: return new Vector2((3 * this.cols) / 4, this.rows / 4);
+      case 2: return new Vector2(this.cols / 4, (3 * this.rows) / 4);
+      case 3: return new Vector2((3 * this.cols) / 4, (3 * this.rows) / 4);
+      default: return new Vector2(0, 0);
+    }
   }
 }

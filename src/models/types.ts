@@ -13,3 +13,9 @@ export enum MessageType {
     LOOSE,
     WARNING,
 }
+
+export enum EventCode {
+    ROULETTE_TRIGGERED,
+    CHANGED_ACTIVE_PIECE,
+    RELEASE_PIECE,
+}

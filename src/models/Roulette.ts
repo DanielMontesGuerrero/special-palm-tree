@@ -27,8 +27,8 @@ export default class Roulette {
 
   onTrigger(ctx: RouletteActionContext) {
     if ((ctx.triggeredAt - this.lastTriggered) >= Roulette.rouletteDelay) {
-      const selectedOptions = this.getOption();
-      this.options[selectedOptions].action(ctx);
+      this.options[this.getOption()].action(ctx);
+      this.lastTriggered = ctx.triggeredAt;
     }
   }
 }

@@ -1,6 +1,17 @@
 import Vector2 from './Vector2';
 import Matrix from './Matrix';
 import {PieceType} from './types';
+import Piece from './Piece';
+
+export type BallContext = {
+  matrix: Matrix,
+  playerId: number;
+};
+
+export type QueuedPiece = {
+  type: PieceType;
+  quantity: number;
+};
 
 export default class Ball {
   type: PieceType;
@@ -24,16 +35,38 @@ export default class Ball {
     this.position.add(this.direction.copy().multiply(this.speed * dt));
   }
 
-  checkCollision(matrix: Matrix) {
-    const i = Math.floor(this.position.x);
-    const j = Math.floor(this.position.y);
-    if (matrix.isOutOfBounds(i, j)) return false;
-    return matrix.get(i, j).isAlive();
+  checkCollision(ctx: BallContext) {
+    const j = Math.floor(this.position.x);
+    const i = Math.floor(this.position.y);
+    if (ctx.matrix.isOutOfBounds(i, j)) return false;
+    switch (this.type) {
+      case PieceType.QUEEN:
+      case PieceType.KNIGHT:
+      case PieceType.PAWN:
+        return ctx.matrix.getPlayerId(i, j) !== ctx.playerId
+          && ctx.matrix.get(i, j).health > 0;
+      case PieceType.BISHOP:
+        return ctx.matrix.getPlayerId(i, j) === ctx.playerId
+          && ctx.matrix.get(i, j).health < 100;
+      case PieceType.ROOK:
+        return ctx.matrix.getPlayerId(i, j) === ctx.playerId
+          && ctx.matrix.get(i, j).defense < 100;
+      default:
+        return false;
+    }
   }
 
-  // TODO: implementar metodo update y verificar que la deteccion de colisiones sea acorde
-  // al tipo de pieza, ejemplo: los peones colisionan con piezas enemigas, los alfiles con
-  // piezas propias
-  // TODO: modular movimiento de la bola, ejemplo: si la bola sale por el lado izquierdo de
-  // la matriz, tiene que reaparecer en el lado derecho
+  update(dt: number, ctx: BallContext) {
+    this.move(dt);
+    this.position.mod(ctx.matrix.cols, ctx.matrix.rows);
+    if (this.checkCollision(ctx)) {
+      Piece.applyEffect({
+        row: Math.floor(this.position.y),
+        col: Math.floor(this.position.x),
+        matrix: ctx.matrix,
+        playerId: ctx.playerId,
+        pieceType: this.type,
+      });
+    }
+  }
 }

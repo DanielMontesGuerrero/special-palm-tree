@@ -1,6 +1,7 @@
 import Message from './Message';
 import Piece from './Piece';
 import Roulette from './Roulette';
+import {PieceType} from './types';
 
 export default class Player {
   name: string;
@@ -15,12 +16,28 @@ export default class Player {
 
   messages: Message[];
 
-  constructor(player: Player) {
-    this.name = player.name;
-    this.id = player.id;
-    this.hand = player.hand;
-    this.score = player.score;
-    this.roulette = player.roulette;
-    this.messages = player.messages;
+  activePiece: Piece;
+
+  constructor(name: string, id: number) {
+    this.name = name;
+    this.id = id;
+    this.hand = [
+      new Piece(PieceType.KING),
+      new Piece(PieceType.QUEEN),
+      new Piece(PieceType.BISHOP),
+      new Piece(PieceType.KNIGHT),
+      new Piece(PieceType.ROOK),
+      new Piece(PieceType.PAWN, 1, true),
+    ];
+    [,,,, this.activePiece] = this.hand;
+    this.score = 0;
+    this.roulette = new Roulette();
+    this.messages = [];
+  }
+
+  changeActivePiece(index: number) {
+    this.activePiece.isActive = false;
+    this.activePiece = this.hand[index];
+    this.activePiece.isActive = true;
   }
 }
