@@ -50,6 +50,10 @@ export default class Piece {
     this.isActive = isActive;
   }
 
+  clear() {
+    this.quantity = 0;
+  }
+
   static applyEffect(ctx: CollisionContext) {
     let dx = [];
     let dy = [];

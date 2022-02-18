@@ -30,4 +30,8 @@ export default class Arrow {
   angleToVector2() {
     return new Vector2(Math.cos(this.angle), Math.sin(this.angle));
   }
+
+  update(dt: number) {
+    this.move(dt);
+  }
 }
