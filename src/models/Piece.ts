@@ -67,6 +67,7 @@ export default class Piece {
             const col = (ctx.col + dx[j] + ctx.matrix.cols) % ctx.matrix.cols;
             if (ctx.matrix.getPlayerId(row, col) !== ctx.playerId) {
               ctx.matrix.get(row, col).applyDamage(stats.QUEEN.attack);
+              ctx.matrix.reportDeadCell(row, col);
             } else {
               ctx.matrix.get(row, col).applyDefense(stats.QUEEN.defense);
               ctx.matrix.get(row, col).applyHealth(stats.QUEEN.health);
@@ -85,6 +86,7 @@ export default class Piece {
           const col = (ctx.col + dx[i] + ctx.matrix.cols) % ctx.matrix.cols;
           if (ctx.matrix.getPlayerId(row, col) !== ctx.playerId) {
             ctx.matrix.get(row, col).applyDamage(stats.KNIGHT.attack);
+            ctx.matrix.reportDeadCell(row, col);
           }
         }
         break;
@@ -93,6 +95,7 @@ export default class Piece {
         break;
       case PieceType.PAWN:
         ctx.matrix.get(ctx.row, ctx.col).applyDamage(stats.PAWN.attack);
+        ctx.matrix.reportDeadCell(ctx.row, ctx.col);
         break;
       default:
         break;

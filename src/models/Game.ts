@@ -35,6 +35,20 @@ export default class Game {
 
   update() {
     this.board.update();
+    for (let playerId = 0; playerId < 4; playerId++) {
+      this.players[playerId].messageManager.pushAliveCellsMessage(
+        this.board.matrix.getCountOfAliveCells(playerId),
+        this.board.matrix.getTotalCountOfCells(),
+      );
+      if (this.board.matrix.getCountOfAliveCells(playerId) === 0) {
+        for (let notifyPlayerId = 0; notifyPlayerId < 4; notifyPlayerId++) {
+          this.players[notifyPlayerId].messageManager.pushDeadPlayerMessage(
+            playerId,
+            this.players[playerId].name,
+          );
+        }
+      }
+    }
     while (this.events.length > 0) {
       const event = Events.get(this.events[0].code);
       if (event !== undefined) {

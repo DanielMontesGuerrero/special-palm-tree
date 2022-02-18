@@ -44,6 +44,7 @@ export const Events = new Map([
       board: ctx.board,
       playerId: ctx.playerId,
       triggeredAt: ctx.triggeredAt,
+      messageManager: ctx.players[ctx.playerId].messageManager,
     });
   })],
   [
@@ -58,6 +59,12 @@ export const Events = new Map([
   [EventCode.RELEASE_PIECE, new Event(EventCode.RELEASE_PIECE, (ctx: EventContext) => {
     if (ctx.pieceType === undefined) {
       throw new Error('No pieceType in EventContext');
+    }
+    for (let i = 0; i < ctx.players.length; i++) {
+      ctx.players[i].messageManager.pushPieceReleasedMessage(
+        ctx.players[ctx.playerId].name,
+        ctx.players[ctx.playerId].hand[ctx.pieceType],
+      );
     }
     ctx.board.addBalls(ctx.playerId, ctx.players[ctx.playerId].hand[ctx.pieceType]);
   })],

@@ -5,8 +5,8 @@ export default class Message {
 
   type: MessageType;
 
-  constructor(message: Message) {
-    this.content = message.content;
-    this.type = message.type;
+  constructor(content: string, type = MessageType.INFO) {
+    this.content = content;
+    this.type = type;
   }
 }

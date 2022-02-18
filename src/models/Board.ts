@@ -71,9 +71,7 @@ export default class Board {
     this.lastUpdate = Date.now();
     for (let playerId = 0; playerId < 4; playerId++) {
       this.arrows[playerId].update(dt);
-      this.balls[playerId].forEach((ball) => {
-        ball.update(dt, {matrix: this.matrix, playerId});
-      });
+      this.balls[playerId].filter((ball) => !ball.update(dt, {matrix: this.matrix, playerId}));
       this.releaseBalls(playerId);
     }
   }

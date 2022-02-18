@@ -1,4 +1,4 @@
-import Message from './Message';
+import MessageManager from './MessageManager';
 import Piece from './Piece';
 import Roulette from './Roulette';
 import {PieceType} from './types';
@@ -14,7 +14,7 @@ export default class Player {
 
   roulette: Roulette;
 
-  messages: Message[];
+  messageManager: MessageManager;
 
   activePiece: Piece;
 
@@ -32,7 +32,7 @@ export default class Player {
     [,,,, this.activePiece] = this.hand;
     this.score = 0;
     this.roulette = new Roulette();
-    this.messages = [];
+    this.messageManager = new MessageManager(id);
   }
 
   changeActivePiece(index: number) {

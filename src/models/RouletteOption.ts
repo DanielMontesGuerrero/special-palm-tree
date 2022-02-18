@@ -3,6 +3,7 @@ import {PieceType} from './types';
 import Piece from './Piece';
 import Arrow from './Arrow';
 import Board from './Board';
+import MessageManager from './MessageManager';
 
 export interface RouletteActionContext {
   hand: Piece[];
@@ -11,6 +12,7 @@ export interface RouletteActionContext {
   board: Board;
   playerId: number;
   triggeredAt: number;
+  messageManager: MessageManager;
 }
 
 export default class RouletteOption {
@@ -48,7 +50,7 @@ export const RouletteSets = {
       let currProbability = 0;
       let selectedPiece = 0;
       const randomProb = Math.random();
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < RouletteSetsConfig.DEFAULT.piecesProbabilities.length; i++) {
         if (currProbability <= randomProb && randomProb < (currProbability
           + RouletteSetsConfig.DEFAULT.piecesProbabilities[i].probability)) {
           selectedPiece = RouletteSetsConfig.DEFAULT.piecesProbabilities[i].type;
