@@ -67,5 +67,6 @@ export const Events = new Map([
       );
     }
     ctx.board.addBalls(ctx.playerId, ctx.players[ctx.playerId].hand[ctx.pieceType]);
+    ctx.players[ctx.playerId].removePiece(ctx.pieceType);
   })],
 ]);
