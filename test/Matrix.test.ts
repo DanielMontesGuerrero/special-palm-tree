@@ -24,4 +24,20 @@ describe('Matrix', () => {
     expect(matrix.getPlayerCoords(2)).toBeVector2(new Vector2(2.5, 7.5));
     expect(matrix.getPlayerCoords(3)).toBeVector2(new Vector2(7.5, 7.5));
   });
+
+  test('countOfAliveCells', () => {
+    const matrix = new Matrix(10, 10);
+
+    // false report
+    matrix.reportDeadCell(3, 4);
+    expect(matrix.getCountOfAliveCells(0)).toBe(25);
+
+    matrix.get(3, 4).health = 0;
+    matrix.reportDeadCell(3, 4);
+    expect(matrix.getCountOfAliveCells(0)).toBe(24);
+
+    // check correct count on repeated report
+    matrix.reportDeadCell(3, 4);
+    expect(matrix.getCountOfAliveCells(0)).toBe(24);
+  });
 });
