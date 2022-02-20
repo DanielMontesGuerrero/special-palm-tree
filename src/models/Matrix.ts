@@ -8,6 +8,8 @@ export default class Matrix {
 
   matrix: Cell[][];
 
+  countOfAliveCells: number[];
+
   constructor(rows: number, cols: number) {
     this.rows = rows;
     this.cols = cols;
@@ -19,6 +21,22 @@ export default class Matrix {
       }
       this.matrix.push(row);
     }
+    const cellsPerPlayer = (rows / 2) * (cols / 2);
+    this.countOfAliveCells = [cellsPerPlayer, cellsPerPlayer, cellsPerPlayer, cellsPerPlayer];
+  }
+
+  reportDeadCell(i: number, j: number) {
+    if (this.matrix[i][j].health <= 0) {
+      this.countOfAliveCells[this.getPlayerId(i, j)] -= 1;
+    }
+  }
+
+  getCountOfAliveCells(playerId: number) {
+    return this.countOfAliveCells[playerId];
+  }
+
+  getTotalCountOfCells() {
+    return (this.rows / 2) * (this.cols / 2);
   }
 
   isOutOfBounds(i: number, j: number) {

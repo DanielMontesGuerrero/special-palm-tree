@@ -56,6 +56,7 @@ export default class Ball {
     }
   }
 
+  // returns true on collision
   update(dt: number, ctx: BallContext) {
     this.move(dt);
     this.position.mod(ctx.matrix.cols, ctx.matrix.rows);
@@ -67,6 +68,8 @@ export default class Ball {
         playerId: ctx.playerId,
         pieceType: this.type,
       });
+      return true;
     }
+    return false;
   }
 }

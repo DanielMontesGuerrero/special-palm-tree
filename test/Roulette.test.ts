@@ -1,5 +1,6 @@
 import Arrow, {DefaultVaules as ArrowDefaults} from '../src/models/Arrow';
 import Board, {DefaultVaules as BoardDefaults} from '../src/models/Board';
+import MessageManager from '../src/models/MessageManager';
 import Piece from '../src/models/Piece';
 import Roulette from '../src/models/Roulette';
 import {RouletteSets, RouletteSetsConfig} from '../src/models/RouletteOption';
@@ -22,6 +23,7 @@ describe('Roulette', () => {
       board: new Board(10, 10),
       playerId: 1,
       triggeredAt: Date.now(),
+      messageManager: new MessageManager(1),
     };
 
     /* -- Take piece -- */

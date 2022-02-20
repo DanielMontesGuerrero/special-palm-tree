@@ -10,8 +10,9 @@ export enum PieceType {
 export enum MessageType {
     INFO,
     WIN,
-    LOOSE,
+    LOSE,
     WARNING,
+    DEAD_PLAYER,
 }
 
 export enum EventCode {
