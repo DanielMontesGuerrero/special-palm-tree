@@ -34,8 +34,13 @@ export default class Game {
   }
 
   update() {
-    this.board.update();
+    const killReporters = [];
     for (let playerId = 0; playerId < 4; playerId++) {
+      killReporters.push(this.players[playerId].killReporter);
+    }
+    this.board.update(killReporters);
+    for (let playerId = 0; playerId < 4; playerId++) {
+      this.players[playerId].updateScore();
       this.players[playerId].messageManager.pushAliveCellsMessage(
         this.board.matrix.getCountOfAliveCells(playerId),
         this.board.matrix.getTotalCountOfCells(),

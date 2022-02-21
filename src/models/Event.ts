@@ -1,7 +1,7 @@
 import Arrow from './Arrow';
 import Board from './Board';
 import Player from './Player';
-import {EventCode, PieceType} from './types';
+import {EventCode, PieceType, ScoreType} from './types';
 
 export type EventContext = {
   playerId: number;
@@ -66,6 +66,10 @@ export const Events = new Map([
         ctx.players[ctx.playerId].hand[ctx.pieceType],
       );
     }
+    ctx.players[ctx.playerId].updateScore(
+      ScoreType.PIECE_RELEASED,
+      ctx.players[ctx.playerId].hand[ctx.pieceType],
+    );
     ctx.board.addBalls(ctx.playerId, ctx.players[ctx.playerId].hand[ctx.pieceType]);
   })],
 ]);

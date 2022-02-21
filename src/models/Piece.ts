@@ -1,5 +1,6 @@
 import {PieceType} from './types';
 import Matrix from './Matrix';
+import KillReporter from './KillReporter';
 
 export interface CollisionContext {
   row: number;
@@ -7,6 +8,7 @@ export interface CollisionContext {
   matrix: Matrix;
   playerId: number;
   pieceType: PieceType;
+  killReporters: KillReporter[];
 }
 
 export const stats = {
@@ -67,7 +69,7 @@ export default class Piece {
             const col = (ctx.col + dx[j] + ctx.matrix.cols) % ctx.matrix.cols;
             if (ctx.matrix.getPlayerId(row, col) !== ctx.playerId) {
               ctx.matrix.get(row, col).applyDamage(stats.QUEEN.attack);
-              ctx.matrix.reportDeadCell(row, col);
+              ctx.matrix.reportDeadCell(row, col, ctx.killReporters[ctx.playerId]);
             } else {
               ctx.matrix.get(row, col).applyDefense(stats.QUEEN.defense);
               ctx.matrix.get(row, col).applyHealth(stats.QUEEN.health);
@@ -86,7 +88,7 @@ export default class Piece {
           const col = (ctx.col + dx[i] + ctx.matrix.cols) % ctx.matrix.cols;
           if (ctx.matrix.getPlayerId(row, col) !== ctx.playerId) {
             ctx.matrix.get(row, col).applyDamage(stats.KNIGHT.attack);
-            ctx.matrix.reportDeadCell(row, col);
+            ctx.matrix.reportDeadCell(row, col, ctx.killReporters[ctx.playerId]);
           }
         }
         break;
@@ -95,7 +97,7 @@ export default class Piece {
         break;
       case PieceType.PAWN:
         ctx.matrix.get(ctx.row, ctx.col).applyDamage(stats.PAWN.attack);
-        ctx.matrix.reportDeadCell(ctx.row, ctx.col);
+        ctx.matrix.reportDeadCell(ctx.row, ctx.col, ctx.killReporters[ctx.playerId]);
         break;
       default:
         break;

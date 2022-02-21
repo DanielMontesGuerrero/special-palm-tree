@@ -1,3 +1,4 @@
+import KillReporter from '../src/models/KillReporter';
 import Matrix from '../src/models/Matrix';
 import Piece, {stats} from '../src/models/Piece';
 import {PieceType} from '../src/models/types';
@@ -5,12 +6,19 @@ import {PieceType} from '../src/models/types';
 describe('Piece', () => {
   test('applyEffect-QUEEN', () => {
     const matrix = new Matrix(10, 10);
+    const killReporters = [
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+    ];
     const ctx = {
       row: 2,
       col: 0,
       matrix,
       playerId: 1,
       pieceType: PieceType.QUEEN,
+      killReporters,
     };
     // dead cell
     matrix.get(1, 9).health = 0;
@@ -47,12 +55,19 @@ describe('Piece', () => {
 
   test('applyEffect-BISHOP', () => {
     const matrix = new Matrix(10, 10);
+    const killReporters = [
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+    ];
     const ctx = {
       row: 9,
       col: 0,
       matrix,
       playerId: 2,
       pieceType: PieceType.BISHOP,
+      killReporters,
     };
     matrix.get(9, 0).health = 10;
     Piece.applyEffect(ctx);
@@ -61,12 +76,19 @@ describe('Piece', () => {
 
   test('applyEffect-KNIGHT', () => {
     const matrix = new Matrix(10, 10);
+    const killReporters = [
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+    ];
     const ctx = {
       row: 9,
       col: 9,
       matrix,
       playerId: 3,
       pieceType: PieceType.KNIGHT,
+      killReporters,
     };
     // dead cell
     matrix.get(0, 9).health = 0;
@@ -94,12 +116,19 @@ describe('Piece', () => {
 
   test('applyEffect-ROOK', () => {
     const matrix = new Matrix(10, 10);
+    const killReporters = [
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+    ];
     const ctx = {
       row: 9,
       col: 0,
       matrix,
       playerId: 2,
       pieceType: PieceType.ROOK,
+      killReporters,
     };
     Piece.applyEffect(ctx);
     expect(matrix.get(9, 0).defense).toBe(10 + stats.ROOK.defense);
@@ -113,12 +142,19 @@ describe('Piece', () => {
 
   test('applyEffect-PAWN', () => {
     const matrix = new Matrix(10, 10);
+    const killReporters = [
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+    ];
     const ctx = {
       row: 0,
       col: 0,
       matrix,
       playerId: 0,
       pieceType: PieceType.PAWN,
+      killReporters,
     };
     Piece.applyEffect(ctx);
     expect(matrix.get(0, 0).health).toBeLessThan(100);

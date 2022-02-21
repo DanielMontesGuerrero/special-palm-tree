@@ -1,5 +1,6 @@
 import Arrow from './Arrow';
 import Ball, {QueuedPiece} from './Ball';
+import KillReporter from './KillReporter';
 import Matrix from './Matrix';
 import Piece from './Piece';
 
@@ -66,13 +67,16 @@ export default class Board {
     }
   }
 
-  update() {
+  update(killReporters: KillReporter[]) {
     const dt = this.lastUpdate === 0 ? 0 : (Date.now() / 1000) - this.lastUpdate;
     this.lastUpdate = Date.now() / 1000;
     for (let playerId = 0; playerId < 4; playerId++) {
       this.arrows[playerId].update(dt);
       this.balls[playerId] = this.balls[playerId].filter(
-        (ball) => !ball.update(dt, {matrix: this.matrix, playerId}),
+        (ball) => !ball.update(
+          dt,
+          {matrix: this.matrix, playerId, killReporters},
+        ),
       );
       this.releaseBalls(playerId);
     }

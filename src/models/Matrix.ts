@@ -1,4 +1,5 @@
 import Cell from './Cell';
+import KillReporter from './KillReporter';
 import Vector2 from './Vector2';
 
 export default class Matrix {
@@ -25,8 +26,9 @@ export default class Matrix {
     this.countOfAliveCells = [cellsPerPlayer, cellsPerPlayer, cellsPerPlayer, cellsPerPlayer];
   }
 
-  reportDeadCell(i: number, j: number) {
+  reportDeadCell(i: number, j: number, killReporter: KillReporter) {
     if (this.matrix[i][j].health <= 0) {
+      killReporter.addKill();
       this.countOfAliveCells[this.getPlayerId(i, j)] -= 1;
     }
   }
