@@ -73,7 +73,7 @@ export default class Player {
         break;
     }
   }
-  
+
   removePiece(type: PieceType) {
     if (type === PieceType.PAWN) {
       this.hand[type].quantity = 1;

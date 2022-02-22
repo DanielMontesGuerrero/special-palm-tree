@@ -33,7 +33,7 @@ export default class Matrix {
   }
 
   reportDeadCell(i: number, j: number, killReporter: KillReporter) {
-    if (this.matrix[i][j].health <= 0  && !this.isMarkedAsDeadCell[i][j]) {
+    if (this.matrix[i][j].health <= 0 && !this.isMarkedAsDeadCell[i][j]) {
       killReporter.addKill();
       this.countOfAliveCells[this.getPlayerId(i, j)] -= 1;
       this.isMarkedAsDeadCell[i][j] = true;
