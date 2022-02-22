@@ -8,26 +8,33 @@ export default class Matrix {
 
   matrix: Cell[][];
 
+  isMarkedAsDeadCell: boolean[][];
+
   countOfAliveCells: number[];
 
   constructor(rows: number, cols: number) {
     this.rows = rows;
     this.cols = cols;
     this.matrix = [];
+    this.isMarkedAsDeadCell = [];
     for (let i = 0; i < rows; i++) {
       const row = [];
+      const isDeadCellRow = [];
       for (let j = 0; j < cols; j++) {
         row.push(new Cell());
+        isDeadCellRow.push(false);
       }
       this.matrix.push(row);
+      this.isMarkedAsDeadCell.push(isDeadCellRow);
     }
     const cellsPerPlayer = (rows / 2) * (cols / 2);
     this.countOfAliveCells = [cellsPerPlayer, cellsPerPlayer, cellsPerPlayer, cellsPerPlayer];
   }
 
   reportDeadCell(i: number, j: number) {
-    if (this.matrix[i][j].health <= 0) {
+    if (this.matrix[i][j].health <= 0 && !this.isMarkedAsDeadCell[i][j]) {
       this.countOfAliveCells[this.getPlayerId(i, j)] -= 1;
+      this.isMarkedAsDeadCell[i][j] = true;
     }
   }
 

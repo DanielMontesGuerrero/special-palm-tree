@@ -35,9 +35,18 @@ export default class Player {
     this.messageManager = new MessageManager(id);
   }
 
-  changeActivePiece(index: number) {
+  changeActivePiece(type: PieceType) {
     this.activePiece.isActive = false;
-    this.activePiece = this.hand[index];
+    this.activePiece = this.hand[type];
     this.activePiece.isActive = true;
+  }
+
+  removePiece(type: PieceType) {
+    if (type === PieceType.PAWN) {
+      this.hand[type].quantity = 1;
+    } else {
+      this.hand[type].clear();
+      this.changeActivePiece(PieceType.PAWN);
+    }
   }
 }
