@@ -2,10 +2,12 @@ import Vector2 from './Vector2';
 import Matrix from './Matrix';
 import {PieceType} from './types';
 import Piece from './Piece';
+import KillReporter from './KillReporter';
 
 export type BallContext = {
   matrix: Matrix,
   playerId: number;
+  killReporters: KillReporter[];
 };
 
 export type QueuedPiece = {
@@ -67,6 +69,7 @@ export default class Ball {
         matrix: ctx.matrix,
         playerId: ctx.playerId,
         pieceType: this.type,
+        killReporters: ctx.killReporters,
       });
       return true;
     }

@@ -20,3 +20,8 @@ export enum EventCode {
     CHANGED_ACTIVE_PIECE,
     RELEASE_PIECE,
 }
+
+export enum ScoreType {
+    KILL,
+    PIECE_RELEASED,
+}

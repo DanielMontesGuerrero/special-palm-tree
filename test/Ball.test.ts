@@ -1,4 +1,5 @@
 import Ball from '../src/models/Ball';
+import KillReporter from '../src/models/KillReporter';
 import Matrix from '../src/models/Matrix';
 import {PieceType} from '../src/models/types';
 import Vector2 from '../src/models/Vector2';
@@ -21,43 +22,49 @@ describe('Ball', () => {
   test('checkCollision', () => {
     let ball = new Ball(PieceType.QUEEN, new Vector2(3.5, 9.9999), 1, new Vector2(1, 1));
     const matrix = new Matrix(10, 10);
+    const killReporters = [
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+      new KillReporter(),
+    ];
     // QUEEN, KNIGHT and PAWN
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(true);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(true);
 
-    expect(ball.checkCollision({playerId: 2, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 2, matrix, killReporters})).toBe(false);
 
     matrix.get(9, 3).health = 0;
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(false);
 
     ball.position = new Vector2(-7, -12);
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(false);
 
     // BISHOP
     ball = new Ball(PieceType.BISHOP, new Vector2(3.5, 9.9999), 1, new Vector2(1, 1));
 
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(false);
 
     matrix.get(9, 3).health = 0;
-    expect(ball.checkCollision({playerId: 2, matrix})).toBe(true);
+    expect(ball.checkCollision({playerId: 2, matrix, killReporters})).toBe(true);
 
     matrix.get(9, 3).health = 100;
-    expect(ball.checkCollision({playerId: 2, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 2, matrix, killReporters})).toBe(false);
 
     ball.position = new Vector2(0, 11);
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(false);
 
     // BISHOP
     ball = new Ball(PieceType.ROOK, new Vector2(3.5, 9.9999), 1, new Vector2(1, 1));
 
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(false);
 
     matrix.get(9, 3).defense = 0;
-    expect(ball.checkCollision({playerId: 2, matrix})).toBe(true);
+    expect(ball.checkCollision({playerId: 2, matrix, killReporters})).toBe(true);
 
     matrix.get(9, 3).defense = 100;
-    expect(ball.checkCollision({playerId: 2, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 2, matrix, killReporters})).toBe(false);
 
     ball.position = new Vector2(11, -4);
-    expect(ball.checkCollision({playerId: 1, matrix})).toBe(false);
+    expect(ball.checkCollision({playerId: 1, matrix, killReporters})).toBe(false);
   });
 });

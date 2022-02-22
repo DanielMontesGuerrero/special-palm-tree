@@ -1,3 +1,4 @@
+import KillReporter from '../src/models/KillReporter';
 import Matrix from '../src/models/Matrix';
 import Vector2 from '../src/models/Vector2';
 
@@ -27,17 +28,18 @@ describe('Matrix', () => {
 
   test('countOfAliveCells', () => {
     const matrix = new Matrix(10, 10);
+    const killReporter = new KillReporter();
 
     // false report
-    matrix.reportDeadCell(3, 4);
+    matrix.reportDeadCell(3, 4, killReporter);
     expect(matrix.getCountOfAliveCells(0)).toBe(25);
 
     matrix.get(3, 4).health = 0;
-    matrix.reportDeadCell(3, 4);
+    matrix.reportDeadCell(3, 4, killReporter);
     expect(matrix.getCountOfAliveCells(0)).toBe(24);
 
     // check correct count on repeated report
-    matrix.reportDeadCell(3, 4);
+    matrix.reportDeadCell(3, 4, killReporter);
     expect(matrix.getCountOfAliveCells(0)).toBe(24);
   });
 });
