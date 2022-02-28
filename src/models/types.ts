@@ -25,3 +25,9 @@ export enum ScoreType {
     KILL,
     PIECE_RELEASED,
 }
+
+export enum GamePhase {
+    IDLE,
+    RUNNING,
+    FINISHED,
+}

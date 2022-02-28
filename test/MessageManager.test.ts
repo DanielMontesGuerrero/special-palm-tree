@@ -48,4 +48,28 @@ describe('Message', () => {
     expect(manager.messages.length).toBe(2);
     expect(manager.messages[1].content).toMatch(/You lose/);
   });
+
+  test('startMessage', () => {
+    const manager = new MessageManager(0);
+    manager.pushStartMessage();
+    expect(manager.messages.length).toBe(1);
+    expect(manager.messages[0].content).toMatch(/.*start.*/);
+  });
+
+  test('winnerMessage', () => {
+    const manager = new MessageManager(0);
+    manager.pushWinnerMessage(1, 'Player 1');
+    expect(manager.messages.length).toBe(1);
+    expect(manager.messages[0].content).toMatch(/.*is the winner.*/);
+    manager.pushWinnerMessage(0, 'Player 0');
+    expect(manager.messages.length).toBe(2);
+    expect(manager.messages[1].content).toMatch(/.*win.*/);
+  });
+
+  test('timeLimit', () => {
+    const manager = new MessageManager(0);
+    manager.pushTimeLimitMessage();
+    expect(manager.messages.length).toBe(1);
+    expect(manager.messages[0].content).toMatch(/.*Time limit exceeded.*/);
+  });
 });

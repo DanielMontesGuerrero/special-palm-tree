@@ -81,4 +81,14 @@ export default class Board {
       this.releaseBalls(playerId);
     }
   }
+
+  getAlivePlayers() {
+    const playerIds = [];
+    for (let id = 0; id < 4; id++) {
+      if (this.matrix.getCountOfAliveCells(id) > 0) {
+        playerIds.push(id);
+      }
+    }
+    return playerIds;
+  }
 }

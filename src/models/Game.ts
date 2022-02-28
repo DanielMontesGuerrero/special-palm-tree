@@ -1,6 +1,7 @@
 import Board from './Board';
 import Player from './Player';
 import {EnqueuedEvent, Events} from './Event';
+import {GamePhase, ScoreType} from './types';
 
 const DefaultVaules = {
   rows: 42,
@@ -20,13 +21,32 @@ export default class Game {
 
   winner: number;
 
-  constructor() {
+  phase: GamePhase;
+
+  static timeLimit = 180000;
+
+  constructor(players: string[]) {
     this.board = new Board(DefaultVaules.rows, DefaultVaules.cols);
     this.players = [];
+    for (let i = 0; i < players.length; i++) {
+      this.players.push(new Player(players[i], i));
+    }
+    for (let i = players.length - 1; i < 4; i++) {
+      this.players.push(new Player(`bot ${i + 1}`, i));
+    }
     this.events = [];
     this.beginTime = 0;
     this.endTime = 0;
     this.winner = -1;
+    this.phase = GamePhase.IDLE;
+  }
+
+  start() {
+    this.beginTime = Date.now();
+    for (let playerId = 0; playerId < 4; playerId++) {
+      this.players[playerId].messageManager.pushStartMessage();
+    }
+    this.phase = GamePhase.RUNNING;
   }
 
   addEvent(event: EnqueuedEvent) {
@@ -34,13 +54,16 @@ export default class Game {
   }
 
   update() {
+    if (this.phase !== GamePhase.RUNNING) {
+      return;
+    }
     const killReporters = [];
     for (let playerId = 0; playerId < 4; playerId++) {
       killReporters.push(this.players[playerId].killReporter);
     }
     this.board.update(killReporters);
     for (let playerId = 0; playerId < 4; playerId++) {
-      this.players[playerId].updateScore();
+      this.players[playerId].updateScore(ScoreType.KILL);
       this.players[playerId].messageManager.pushAliveCellsMessage(
         this.board.matrix.getCountOfAliveCells(playerId),
         this.board.matrix.getTotalCountOfCells(),
@@ -54,6 +77,12 @@ export default class Game {
         }
       }
     }
+    this.processEvents();
+    this.checkWinner();
+    this.checkTimeLimit();
+  }
+
+  processEvents() {
     while (this.events.length > 0) {
       const event = Events.get(this.events[0].code);
       if (event !== undefined) {
@@ -67,9 +96,58 @@ export default class Game {
           arrows: this.board.arrows,
         });
       } else {
-        throw new Error('No valid event code');
+        throw new Error('Invalid event code');
       }
       this.events.shift();
     }
+  }
+
+  checkWinner() {
+    const alivePlayers = this.board.getAlivePlayers();
+    if (alivePlayers.length === 1) {
+      [this.winner] = alivePlayers;
+    } else if (alivePlayers.length === 0) {
+      this.winner = this.getPlayerWithGreatestScore();
+    }
+    if (this.winner !== -1) {
+      this.phase = GamePhase.FINISHED;
+      for (let playerId = 0; playerId < 4; playerId++) {
+        this.players[playerId].messageManager.pushWinnerMessage(
+          this.winner,
+          this.players[this.winner].name,
+        );
+      }
+      this.endTime = Date.now();
+    }
+  }
+
+  checkTimeLimit() {
+    const gameTime = Date.now() - this.beginTime;
+    if (gameTime >= Game.timeLimit) {
+      for (let playerId = 0; playerId < 4; playerId++) {
+        this.players[playerId].messageManager.pushTimeLimitMessage();
+      }
+      this.winner = this.getPlayerWithGreatestScore();
+      for (let playerId = 0; playerId < 4; playerId++) {
+        this.players[playerId].messageManager.pushWinnerMessage(
+          this.winner,
+          this.players[this.winner].name,
+        );
+      }
+      this.endTime = Date.now();
+      this.phase = GamePhase.FINISHED;
+    }
+  }
+
+  getPlayerWithGreatestScore() {
+    let playerId = -1;
+    let maxScore = -1;
+    for (let id = 0; id < 4; id++) {
+      if (this.players[id].score > maxScore) {
+        maxScore = this.players[id].score;
+        playerId = id;
+      }
+    }
+    return playerId;
   }
 }

@@ -49,6 +49,22 @@ export default class MessageManager {
     }
   }
 
+  pushStartMessage() {
+    this.messages.push(new Message('Game started'));
+  }
+
+  pushWinnerMessage(winnerId: number, winnerName: string) {
+    if (winnerId === this.playerId) {
+      this.messages.push(new Message('You win', MessageType.WIN));
+    } else {
+      this.messages.push(new Message(`${winnerName} is the winner`, MessageType.WIN));
+    }
+  }
+
+  pushTimeLimitMessage() {
+    this.messages.push(new Message('Time limit exceeded, who is the winner?'));
+  }
+
   static getPieceName(piece: Piece) {
     let name = '';
     switch (piece.type) {
