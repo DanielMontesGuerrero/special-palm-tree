@@ -36,4 +36,21 @@ describe('Board', () => {
     board.update(killReporters);
     expect(board.balls[0].length).toBe(1);
   });
+
+  test('getAlivePlayers', () => {
+    const board = new Board(2, 2);
+    const killReporter = new KillReporter();
+    expect(board.getAlivePlayers()).toStrictEqual([0, 1, 2, 3]);
+    board.matrix.get(0, 1).health = 0;
+    board.matrix.reportDeadCell(0, 1, killReporter);
+    expect(board.getAlivePlayers()).toStrictEqual([0, 2, 3]);
+    board.matrix.get(0, 0).health = 0;
+    board.matrix.get(1, 0).health = 0;
+    board.matrix.reportDeadCell(0, 0, killReporter);
+    board.matrix.reportDeadCell(1, 0, killReporter);
+    expect(board.getAlivePlayers()).toStrictEqual([3]);
+    board.matrix.get(1, 1).health = 0;
+    board.matrix.reportDeadCell(1, 1, killReporter);
+    expect(board.getAlivePlayers()).toStrictEqual([]);
+  });
 });
