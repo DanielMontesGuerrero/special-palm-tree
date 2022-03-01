@@ -1,3 +1,4 @@
+import {Config} from '../config/config';
 import KillReporter from './KillReporter';
 import MessageManager from './MessageManager';
 import Piece from './Piece';
@@ -48,18 +49,17 @@ export default class Player {
   updateScore(type: ScoreType, piece: Piece | null = null) {
     const getPiceValue = (pieceType: PieceType) => {
       switch (pieceType) {
-        case PieceType.QUEEN: return 3;
-        case PieceType.BISHOP: return 2;
-        case PieceType.KNIGHT: return 2;
-        case PieceType.ROOK: return 2;
-        case PieceType.PAWN: return 1;
+        case PieceType.QUEEN: return Config.score.pieceValue.QUEEN;
+        case PieceType.BISHOP: return Config.score.pieceValue.BISHOP;
+        case PieceType.KNIGHT: return Config.score.pieceValue.KNIGHT;
+        case PieceType.ROOK: return Config.score.pieceValue.ROOK;
+        case PieceType.PAWN: return Config.score.pieceValue.PAWN;
         default: return 0;
       }
     };
-    const KILL_VALUE = 10000;
     switch (type) {
       case ScoreType.KILL:
-        this.score += this.killReporter.unreportedKills * KILL_VALUE;
+        this.score += this.killReporter.unreportedKills * Config.score.killValue;
         this.killReporter.acknowledge();
         break;
       case ScoreType.PIECE_RELEASED:

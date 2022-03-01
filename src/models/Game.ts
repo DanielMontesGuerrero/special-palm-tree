@@ -2,11 +2,7 @@ import Board from './Board';
 import Player from './Player';
 import {EnqueuedEvent, Events} from './Event';
 import {GamePhase, ScoreType} from './types';
-
-const DefaultVaules = {
-  rows: 42,
-  cols: 42,
-};
+import {Config} from '../config/config';
 
 export default class Game {
   board: Board;
@@ -23,10 +19,10 @@ export default class Game {
 
   phase: GamePhase;
 
-  static timeLimit = 180000;
+  static timeLimit = Config.timeLimit;
 
   constructor(players: string[]) {
-    this.board = new Board(DefaultVaules.rows, DefaultVaules.cols);
+    this.board = new Board(Config.rows, Config.cols);
     this.players = [];
     for (let i = 0; i < players.length; i++) {
       this.players.push(new Player(players[i], i));

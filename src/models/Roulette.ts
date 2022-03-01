@@ -1,7 +1,8 @@
+import {Config} from '../config/config';
 import RouletteOption, {RouletteActionContext, RouletteSets} from './RouletteOption';
 
 export default class Roulette {
-  static rouletteDelay = 3000;
+  static rouletteDelay = Config.roulette.rouletteDelay;
 
   lastTriggered: number;
 

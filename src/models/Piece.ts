@@ -1,6 +1,7 @@
 import {PieceType} from './types';
 import Matrix from './Matrix';
 import KillReporter from './KillReporter';
+import {Config} from '../config/config';
 
 export interface CollisionContext {
   row: number;
@@ -10,34 +11,6 @@ export interface CollisionContext {
   pieceType: PieceType;
   killReporters: KillReporter[];
 }
-
-export const stats = {
-  QUEEN: {
-    attack: 80,
-    defense: 10,
-    health: 10,
-  },
-  KNIGHT: {
-    attack: 40,
-    defense: 0,
-    health: 0,
-  },
-  BISHOP: {
-    attack: 0,
-    defense: 0,
-    health: 60,
-  },
-  ROOK: {
-    attack: 0,
-    defense: 80,
-    health: 0,
-  },
-  PAWN: {
-    attack: 20,
-    defense: 0,
-    health: 0,
-  },
-};
 
 export default class Piece {
   type: PieceType;
@@ -68,17 +41,17 @@ export default class Piece {
             const row = (ctx.row + dy[i] + ctx.matrix.rows) % ctx.matrix.rows;
             const col = (ctx.col + dx[j] + ctx.matrix.cols) % ctx.matrix.cols;
             if (ctx.matrix.getPlayerId(row, col) !== ctx.playerId) {
-              ctx.matrix.get(row, col).applyDamage(stats.QUEEN.attack);
+              ctx.matrix.get(row, col).applyDamage(Config.pieceStats.QUEEN.attack);
               ctx.matrix.reportDeadCell(row, col, ctx.killReporters[ctx.playerId]);
             } else {
-              ctx.matrix.get(row, col).applyDefense(stats.QUEEN.defense);
-              ctx.matrix.get(row, col).applyHealth(stats.QUEEN.health);
+              ctx.matrix.get(row, col).applyDefense(Config.pieceStats.QUEEN.defense);
+              ctx.matrix.get(row, col).applyHealth(Config.pieceStats.QUEEN.health);
             }
           }
         }
         break;
       case PieceType.BISHOP:
-        ctx.matrix.get(ctx.row, ctx.col).applyHealth(stats.BISHOP.health);
+        ctx.matrix.get(ctx.row, ctx.col).applyHealth(Config.pieceStats.BISHOP.health);
         break;
       case PieceType.KNIGHT:
         dx = [-1, 0, 0, 0, 1];
@@ -87,16 +60,16 @@ export default class Piece {
           const row = (ctx.row + dy[i] + ctx.matrix.rows) % ctx.matrix.rows;
           const col = (ctx.col + dx[i] + ctx.matrix.cols) % ctx.matrix.cols;
           if (ctx.matrix.getPlayerId(row, col) !== ctx.playerId) {
-            ctx.matrix.get(row, col).applyDamage(stats.KNIGHT.attack);
+            ctx.matrix.get(row, col).applyDamage(Config.pieceStats.KNIGHT.attack);
             ctx.matrix.reportDeadCell(row, col, ctx.killReporters[ctx.playerId]);
           }
         }
         break;
       case PieceType.ROOK:
-        ctx.matrix.get(ctx.row, ctx.col).applyDefense(stats.ROOK.defense);
+        ctx.matrix.get(ctx.row, ctx.col).applyDefense(Config.pieceStats.ROOK.defense);
         break;
       case PieceType.PAWN:
-        ctx.matrix.get(ctx.row, ctx.col).applyDamage(stats.PAWN.attack);
+        ctx.matrix.get(ctx.row, ctx.col).applyDamage(Config.pieceStats.PAWN.attack);
         ctx.matrix.reportDeadCell(ctx.row, ctx.col, ctx.killReporters[ctx.playerId]);
         break;
       default:

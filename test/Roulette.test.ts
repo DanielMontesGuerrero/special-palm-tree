@@ -1,9 +1,10 @@
-import Arrow, {DefaultVaules as ArrowDefaults} from '../src/models/Arrow';
-import Board, {DefaultVaules as BoardDefaults} from '../src/models/Board';
+import {Config, RouletteSetsConfig} from '../src/config/config';
+import Arrow from '../src/models/Arrow';
+import Board from '../src/models/Board';
 import MessageManager from '../src/models/MessageManager';
 import Piece from '../src/models/Piece';
 import Roulette from '../src/models/Roulette';
-import {RouletteSets, RouletteSetsConfig} from '../src/models/RouletteOption';
+import {RouletteSets} from '../src/models/RouletteOption';
 import {PieceType} from '../src/models/types';
 
 describe('Roulette', () => {
@@ -71,6 +72,7 @@ describe('Roulette', () => {
     expect(ctx.activePiece.quantity).toBe(2);
 
     /* -- Increase arrow speed -- */
+    const ArrowDefaults = Config.arrow;
     RouletteSets.DEFAULT[4].action(ctx);
     expect(ctx.arrow.angularSpeed)
       .toBeCloseTo(ArrowDefaults.angularSpeed + RouletteSetsConfig.DEFAULT.increasedAngularSpeed);
@@ -78,7 +80,7 @@ describe('Roulette', () => {
     /* -- Increase balls speed -- */
     RouletteSets.DEFAULT[5].action(ctx);
     expect(ctx.board.ballSpeeds[1])
-      .toBe(BoardDefaults.defaultSpeed + RouletteSetsConfig.DEFAULT.increasedSpeed);
+      .toBe(Config.ball.defaultSpeed + RouletteSetsConfig.DEFAULT.increasedSpeed);
 
     jest.spyOn(global.Math, 'random').mockRestore();
   });

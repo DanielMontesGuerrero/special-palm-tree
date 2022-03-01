@@ -1,12 +1,9 @@
+import {Config} from '../config/config';
 import Arrow from './Arrow';
 import Ball, {QueuedPiece} from './Ball';
 import KillReporter from './KillReporter';
 import Matrix from './Matrix';
 import Piece from './Piece';
-
-export const DefaultVaules = {
-  defaultSpeed: 1,
-};
 
 export default class Board {
   lastUpdate: number;
@@ -23,17 +20,17 @@ export default class Board {
 
   ballsToRelease: QueuedPiece[][];
 
-  static ballReleaseDelay = 250;
+  static ballReleaseDelay = Config.ball.releaseDelay;
 
   constructor(height: number, width: number) {
     this.matrix = new Matrix(height, width);
     this.lastUpdate = 0;
     this.balls = [[], [], [], []];
     this.ballSpeeds = [
-      DefaultVaules.defaultSpeed,
-      DefaultVaules.defaultSpeed,
-      DefaultVaules.defaultSpeed,
-      DefaultVaules.defaultSpeed,
+      Config.ball.defaultSpeed,
+      Config.ball.defaultSpeed,
+      Config.ball.defaultSpeed,
+      Config.ball.defaultSpeed,
     ];
     this.arrows = [
       new Arrow(),
