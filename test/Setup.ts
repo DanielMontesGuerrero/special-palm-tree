@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import Vector2 from '../src/models/Vector2';
+import Vector2 from '../src/game/Vector2';
 
 declare global {
   namespace jest {

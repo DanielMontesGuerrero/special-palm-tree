@@ -1,10 +1,10 @@
 import {Config} from '../src/config/config';
-import Board from '../src/models/Board';
-import Game from '../src/models/Game';
-import Matrix from '../src/models/Matrix';
-import MessageManager from '../src/models/MessageManager';
-import Player from '../src/models/Player';
-import {GamePhase, PieceType} from '../src/models/types';
+import Board from '../src/game/Board';
+import Game from '../src/game/Game';
+import Matrix from '../src/game/Matrix';
+import MessageManager from '../src/game/MessageManager';
+import Player from '../src/game/Player';
+import {GamePhase, PieceType} from '../src/game/types';
 
 describe('Game Config', () => {
   test('Board dimensions', () => {

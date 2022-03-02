@@ -27,7 +27,7 @@ export default class Game {
     for (let i = 0; i < players.length; i++) {
       this.players.push(new Player(players[i], i));
     }
-    for (let i = players.length - 1; i < 4; i++) {
+    for (let i = players.length; i < 4; i++) {
       this.players.push(new Player(`bot ${i + 1}`, i));
     }
     this.events = [];
@@ -118,8 +118,7 @@ export default class Game {
   }
 
   checkTimeLimit() {
-    const gameTime = Date.now() - this.beginTime;
-    if (gameTime >= Game.timeLimit) {
+    if (this.getRunningTime() >= Game.timeLimit) {
       for (let playerId = 0; playerId < 4; playerId++) {
         this.players[playerId].messageManager.pushTimeLimitMessage();
       }
@@ -145,5 +144,9 @@ export default class Game {
       }
     }
     return playerId;
+  }
+
+  getRunningTime() {
+    return Date.now() - this.beginTime;
   }
 }

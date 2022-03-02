@@ -4,6 +4,9 @@
   "description": "Game motor",
   "main": "index.js",
   "scripts": {
+    "build": "npx tsc",
+    "clean": "npx tsc --build --clean",
+    "start": "npm run build && node build/scripts/runGame.js",
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
@@ -22,6 +25,7 @@
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
+    "chalk": "^4.1.2",
     "eslint": "^8.8.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -35,6 +39,8 @@
     "transform": {
       "^.+\\.ts?$": "ts-jest"
     },
-    "setupFilesAfterEnv": ["./test/Setup.ts"]
+    "setupFilesAfterEnv": [
+      "./test/Setup.ts"
+    ]
   }
 }

@@ -1,4 +1,4 @@
-import {PieceType} from '../models/types';
+import {PieceType} from '../game/types';
 
 export const Config = {
   rows: 42,

@@ -1,8 +1,8 @@
-import Board from '../src/models/Board';
-import {Events} from '../src/models/Event';
-import Player from '../src/models/Player';
-import Roulette from '../src/models/Roulette';
-import {EventCode, PieceType} from '../src/models/types';
+import Board from '../src/game/Board';
+import {Events} from '../src/game/Event';
+import Player from '../src/game/Player';
+import Roulette from '../src/game/Roulette';
+import {EventCode, PieceType} from '../src/game/types';
 
 describe('Event', () => {
   test('ROULETTE_TRIGGERED', async () => {

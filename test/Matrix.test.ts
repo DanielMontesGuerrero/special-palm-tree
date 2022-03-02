@@ -1,6 +1,6 @@
-import KillReporter from '../src/models/KillReporter';
-import Matrix from '../src/models/Matrix';
-import Vector2 from '../src/models/Vector2';
+import KillReporter from '../src/game/KillReporter';
+import Matrix from '../src/game/Matrix';
+import Vector2 from '../src/game/Vector2';
 
 describe('Matrix', () => {
   test('playerId', () => {

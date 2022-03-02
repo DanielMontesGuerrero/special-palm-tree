@@ -1,11 +1,11 @@
 import {Config, RouletteSetsConfig} from '../src/config/config';
-import Arrow from '../src/models/Arrow';
-import Board from '../src/models/Board';
-import MessageManager from '../src/models/MessageManager';
-import Piece from '../src/models/Piece';
-import Roulette from '../src/models/Roulette';
-import {RouletteSets} from '../src/models/RouletteOption';
-import {PieceType} from '../src/models/types';
+import Arrow from '../src/game/Arrow';
+import Board from '../src/game/Board';
+import MessageManager from '../src/game/MessageManager';
+import Piece from '../src/game/Piece';
+import Roulette from '../src/game/Roulette';
+import {RouletteSets} from '../src/game/RouletteOption';
+import {PieceType} from '../src/game/types';
 
 describe('Roulette', () => {
   test('RouletteSet-DEFAULT', () => {

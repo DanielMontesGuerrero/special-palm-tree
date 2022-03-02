@@ -1,5 +1,5 @@
-import Player from '../src/models/Player';
-import {ScoreType, PieceType} from '../src/models/types';
+import Player from '../src/game/Player';
+import {ScoreType, PieceType} from '../src/game/types';
 
 describe('Player', () => {
   test('updateScore', () => {

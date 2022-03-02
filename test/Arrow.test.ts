@@ -1,5 +1,5 @@
-import Arrow from '../src/models/Arrow';
-import Vector2 from '../src/models/Vector2';
+import Arrow from '../src/game/Arrow';
+import Vector2 from '../src/game/Vector2';
 
 describe('Arrow', () => {
   test('move', () => {

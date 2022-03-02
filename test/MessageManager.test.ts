@@ -1,6 +1,6 @@
-import MessageManager from '../src/models/MessageManager';
-import Piece from '../src/models/Piece';
-import {PieceType} from '../src/models/types';
+import MessageManager from '../src/game/MessageManager';
+import Piece from '../src/game/Piece';
+import {PieceType} from '../src/game/types';
 
 describe('Message', () => {
   test('RouletteOptionSelected', () => {

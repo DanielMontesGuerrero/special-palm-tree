@@ -1,8 +1,8 @@
 import {Config} from '../src/config/config';
-import KillReporter from '../src/models/KillReporter';
-import Matrix from '../src/models/Matrix';
-import Piece from '../src/models/Piece';
-import {PieceType} from '../src/models/types';
+import KillReporter from '../src/game/KillReporter';
+import Matrix from '../src/game/Matrix';
+import Piece from '../src/game/Piece';
+import {PieceType} from '../src/game/types';
 
 describe('Piece', () => {
   test('applyEffect-QUEEN', () => {
