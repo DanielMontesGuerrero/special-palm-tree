@@ -33,6 +33,7 @@
     "@typescript-eslint/type-annotation-spacing": ["error"],
     "switch-colon-spacing": ["error", {"before": false, "after": true}],
     "object-curly-spacing": ["error", "never"],
-    "no-plusplus": ["error", {"allowForLoopAfterthoughts": true}]
+    "no-plusplus": ["error", {"allowForLoopAfterthoughts": true}],
+    "no-use-before-define": ["error", {"variables": false}]
   }
 }

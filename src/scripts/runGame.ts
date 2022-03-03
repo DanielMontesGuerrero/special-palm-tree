@@ -1,14 +1,29 @@
-import readline from 'readline';
-import Game from '../game/Game';
-import {gameOverview} from '../utils/print';
+import {Server} from 'socket.io';
+import GameHandler from '../utils/GameHandler';
+import OutputManager from '../utils/OutputManager';
 
-const game = new Game([]);
+const port = 3000;
+const io = new Server(port);
+const gameHandler = new GameHandler();
+const outputManager = new OutputManager();
 
-game.start();
-console.clear();
+io.on('connection', (socket) => {
+  outputManager.print('Connected');
+  socket.on('start', () => {
+    gameHandler.start();
+  });
+  socket.on('stop', () => {
+    gameHandler.stop();
+  });
+  socket.on('overview', (type, options) => {
+    gameHandler.changeRenderConfig(type, options);
+  });
+  socket.on('gameEvent', (event) => {
+    gameHandler.pushEvent(event);
+  });
+});
 
-for (let i = 0; i < 1000; i++) {
-  game.update();
-  readline.cursorTo(process.stdout, 0, 0);
-  console.log(gameOverview(game));
-}
+setInterval(() => {
+  gameHandler.update();
+  outputManager.print(gameHandler.renderText());
+}, 200);

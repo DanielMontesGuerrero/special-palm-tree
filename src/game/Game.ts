@@ -45,6 +45,12 @@ export default class Game {
     this.phase = GamePhase.RUNNING;
   }
 
+  stop() {
+    this.phase = GamePhase.FINISHED;
+    this.endTime = Date.now();
+    this.winner = this.getPlayerWithGreatestScore();
+  }
+
   addEvent(event: EnqueuedEvent) {
     this.events.push(event);
   }
@@ -146,7 +152,21 @@ export default class Game {
     return playerId;
   }
 
+  getWinner() {
+    if (this.winner === -1) {
+      return this.getPlayerWithGreatestScore();
+    }
+    return this.winner;
+  }
+
   getRunningTime() {
-    return Date.now() - this.beginTime;
+    if (this.phase === GamePhase.IDLE) {
+      return 0;
+    }
+    if (this.phase === GamePhase.RUNNING) {
+      return Date.now() - this.beginTime;
+    }
+
+    return this.endTime - this.beginTime;
   }
 }

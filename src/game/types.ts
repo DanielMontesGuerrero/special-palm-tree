@@ -16,9 +16,9 @@ export enum MessageType {
 }
 
 export enum EventCode {
-    ROULETTE_TRIGGERED,
+    TRIGGERED_ROULETTE,
     CHANGED_ACTIVE_PIECE,
-    RELEASE_PIECE,
+    RELEASED_PIECE,
 }
 
 export enum ScoreType {

@@ -4,7 +4,7 @@ import Game from '../game/Game';
 import Board from '../game/Board';
 import Player from '../game/Player';
 import Piece from '../game/Piece';
-import {PieceType} from '../game/types';
+import {GamePhase, PieceType} from '../game/types';
 
 type ListElement = string | number | boolean | Player | Piece;
 
@@ -44,13 +44,31 @@ function nameFromType(type: PieceType) {
   }
 }
 
+function getPhaseName(phase: GamePhase) {
+  switch (phase) {
+    case GamePhase.IDLE: return 'IDLE';
+    case GamePhase.RUNNING: return 'RUNNING';
+    case GamePhase.FINISHED: return 'FINISHED';
+    default: return '';
+  }
+}
+
 export function gameOverview(game: Game) {
   const scores = game.players
-    .sort((a, b) => a.score - b.score);
+    .sort((a, b) => b.score - a.score);
   const texts = [];
+  let gameTime = 'Not running';
+  if (game.phase !== GamePhase.IDLE) {
+    gameTime = `${game.getRunningTime()}ms`;
+  }
   texts.push(chalk.bold.inverse.yellow('Game'));
-  texts.push(keyValueText('Game time', `${game.getRunningTime()}ms`));
-  texts.push(keyValueText('Alive players', inlineList(game.board.getAlivePlayers())));
+  texts.push(keyValueText('Phase', getPhaseName(game.phase)));
+  texts.push(keyValueText('Game time', gameTime));
+  if (game.phase === GamePhase.FINISHED) {
+    texts.push(keyValueText('Winner', game.players[game.getWinner()].name));
+  } else {
+    texts.push(keyValueText('Alive players', inlineList(game.board.getAlivePlayers())));
+  }
   texts.push(formattedList('Scores', scores, (player: Player) => `${chalk.cyan(player.name)}: ${player.score}`));
   return texts.join('\n');
 }

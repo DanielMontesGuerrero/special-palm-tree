@@ -33,7 +33,7 @@ export default class Event {
 }
 
 export const Events = new Map([
-  [EventCode.ROULETTE_TRIGGERED, new Event(EventCode.ROULETTE_TRIGGERED, (ctx: EventContext) => {
+  [EventCode.TRIGGERED_ROULETTE, new Event(EventCode.TRIGGERED_ROULETTE, (ctx: EventContext) => {
     if (ctx.triggeredAt === undefined) {
       throw new Error('No triggeredAt in EventContext');
     }
@@ -56,7 +56,7 @@ export const Events = new Map([
       ctx.players[ctx.playerId].changeActivePiece(ctx.newActivePiece);
     }),
   ],
-  [EventCode.RELEASE_PIECE, new Event(EventCode.RELEASE_PIECE, (ctx: EventContext) => {
+  [EventCode.RELEASED_PIECE, new Event(EventCode.RELEASED_PIECE, (ctx: EventContext) => {
     if (ctx.pieceType === undefined) {
       throw new Error('No pieceType in EventContext');
     }
