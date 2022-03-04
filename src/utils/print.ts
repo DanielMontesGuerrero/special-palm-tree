@@ -5,6 +5,7 @@ import Board from '../game/Board';
 import Player from '../game/Player';
 import Piece from '../game/Piece';
 import {GamePhase, PieceType} from '../game/types';
+import Message from '../game/Message';
 
 type ListElement = string | number | boolean | Player | Piece;
 
@@ -16,10 +17,13 @@ function formattedList<T>(
   name: string,
   list: T[],
   transform: (item: T) => string,
+  limit: number | null = null,
 ) {
   let listText = `${chalk.blue.italic(name)}:\n`;
-  list.forEach((item) => {
-    listText += `\t${transform(item)}\n`;
+  list.forEach((item, index) => {
+    if ((limit && index < limit) || limit === null) {
+      listText += `\t${transform(item)}\n`;
+    }
   });
   return listText;
 }
@@ -73,20 +77,59 @@ export function gameOverview(game: Game) {
   return texts.join('\n');
 }
 
+export function ballsOverview(board: Board) {
+  const matrix = new Array<string[]>(board.matrix.rows);
+  let matrixText = '';
+  const ballChar = '*';
+  const getCellFromPlayerId = (playerId: number) => {
+    switch (playerId) {
+      case 0: return chalk.inverse.green(ballChar);
+      case 1: return chalk.inverse.yellow(ballChar);
+      case 2: return chalk.inverse.blue(ballChar);
+      case 3: return chalk.inverse.red(ballChar);
+      default: return chalk.inverse.white(ballChar);
+    }
+  };
+  const setCell = (i: number, j: number, playerId: number) => {
+    if (matrix[i][j] === chalk.inverse.gray(ballChar)) {
+      matrix[i][j] = getCellFromPlayerId(playerId);
+    } else {
+      matrix[i][j] = chalk.inverse.white(ballChar);
+    }
+  };
+  for (let i = 0; i < board.matrix.rows; i++) {
+    matrix[i] = new Array<string>(board.matrix.cols);
+    for (let j = 0; j < board.matrix.cols; j++) {
+      matrix[i][j] = chalk.inverse.gray(ballChar);
+    }
+  }
+  board.balls.forEach((playerBalls, index) => {
+    playerBalls.forEach((ball) => {
+      setCell(Math.floor(ball.position.y), Math.floor(ball.position.x), index);
+    });
+  });
+  for (let i = 0; i < board.matrix.rows; i++) {
+    matrixText += matrix[i].join('');
+    matrixText += '\n';
+  }
+  return chalk.bold.inverse.yellow('Board\n') + matrixText;
+}
+
 export function boardOverview(board: Board) {
   const matrix: string[] = [];
+  const cellChar = ' ';
   board.matrix.matrix.forEach((row) => {
     const textRow: string[] = [];
     row.forEach((cell) => {
       let health = '';
       if (cell.health >= 60) {
-        health = chalk.inverse.green(' ');
+        health = chalk.inverse.green(cellChar);
       } else if (cell.health >= 30) {
-        health = chalk.inverse.yellow(' ');
+        health = chalk.inverse.yellow(cellChar);
       } else if (cell.health > 0) {
-        health = chalk.inverse.red(' ');
+        health = chalk.inverse.red(cellChar);
       } else {
-        health = chalk.inverse.black(' ');
+        health = chalk.inverse.black(cellChar);
       }
       textRow.push(health);
     });
@@ -112,5 +155,22 @@ export function playerOverview(player: Player) {
   texts.push(keyValueText('id', player.id));
   texts.push(keyValueText('score', player.score));
   texts.push(hand);
+  return texts.join('\n');
+}
+
+export function messagesOverview(player: Player) {
+  const texts = [];
+  const messages = player.messageManager.messages.map((item) => item);
+  messages.reverse();
+  texts.push(chalk.bold.inverse.yellow('Player Messages'));
+  texts.push(formattedList('Messages', messages, (message: Message) => {
+    let text = message.content;
+    const limit = 40;
+    if (text.length > limit) {
+      text = text.slice(0, limit);
+      text += '...';
+    }
+    return text;
+  }, 5));
   return texts.join('\n');
 }

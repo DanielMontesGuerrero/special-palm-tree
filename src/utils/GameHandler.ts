@@ -1,7 +1,9 @@
 import {EnqueuedEvent} from '../game/Event';
 import Game from '../game/Game';
 import OverviewType from './overviewType';
-import {boardOverview, gameOverview, playerOverview} from './print';
+import {
+  ballsOverview, boardOverview, gameOverview, messagesOverview, playerOverview,
+} from './print';
 
 type RenderConfig = {
   overviewType: OverviewType;
@@ -43,7 +45,7 @@ export default class GameHandler {
 
   changeRenderConfig(type: OverviewType, options: RenderConfigOptions) {
     this.renderConfig.overviewType = type;
-    if (type === OverviewType.PLAYER) {
+    if (type === OverviewType.PLAYER || type === OverviewType.MESSAGES) {
       this.renderConfig.selectedPlayerId = options.playerId ?? 0;
     }
   }
@@ -64,6 +66,12 @@ export default class GameHandler {
         break;
       case OverviewType.PLAYER:
         gameRenderText = playerOverview(this.game.players[this.renderConfig.selectedPlayerId]);
+        break;
+      case OverviewType.BALLS:
+        gameRenderText = ballsOverview(this.game.board);
+        break;
+      case OverviewType.MESSAGES:
+        gameRenderText = messagesOverview(this.game.players[this.renderConfig.selectedPlayerId]);
         break;
       default:
         break;

@@ -1,8 +1,9 @@
 import {Server} from 'socket.io';
+import gameTesterConfig from '../config/gameTesterConfig';
 import GameHandler from '../utils/GameHandler';
 import OutputManager from '../utils/OutputManager';
 
-const port = 3000;
+const {port} = gameTesterConfig;
 const io = new Server(port);
 const gameHandler = new GameHandler();
 const outputManager = new OutputManager();
@@ -24,6 +25,9 @@ io.on('connection', (socket) => {
 });
 
 setInterval(() => {
-  gameHandler.update();
   outputManager.print(gameHandler.renderText());
-}, 200);
+}, gameTesterConfig.renderTime);
+
+setInterval(() => {
+  gameHandler.update();
+}, gameTesterConfig.updateTime);

@@ -18,6 +18,8 @@ const ChangeViewMenu = {
         'Game',
         'Board',
         'Single player',
+        'Balls',
+        'Messages',
       ],
     },
     {
@@ -43,7 +45,7 @@ const ChangeViewMenu = {
         },
       ],
       when(answers: ChangeViewAnswers) {
-        return answers.option === 'Single player';
+        return answers.option === 'Single player' || answers.option === 'Messages';
       },
     },
   ],
@@ -61,6 +63,12 @@ const ChangeViewMenu = {
         break;
       case 'Single player':
         type = OverviewType.PLAYER;
+        break;
+      case 'Balls':
+        type = OverviewType.BALLS;
+        break;
+      case 'Messages':
+        type = OverviewType.MESSAGES;
         break;
       default:
         break;
@@ -263,6 +271,7 @@ const MainMenu = {
         break;
       default:
         socket.emit('stop');
+        this.init(socket);
         break;
     }
   },

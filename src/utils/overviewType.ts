@@ -3,6 +3,8 @@ enum OverviewType {
     PLAYERS,
     PLAYER,
     BOARD,
+    BALLS,
+    MESSAGES,
 }
 
 export default OverviewType;
