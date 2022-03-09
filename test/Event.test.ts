@@ -52,6 +52,7 @@ describe('Event', () => {
       board,
       arrows: board.arrows,
     };
+    players[0].hand[PieceType.ROOK].quantity = 1;
     const event = Events.get(EventCode.CHANGED_ACTIVE_PIECE);
     expect(event).toBeDefined();
     event?.action(ctx);

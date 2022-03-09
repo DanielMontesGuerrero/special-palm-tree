@@ -41,15 +41,15 @@ describe('Piece', () => {
     }
 
     // check that dead cell remains dead
-    expect(matrix.get(1, 9).defense).toBe(10);
+    expect(matrix.get(1, 9).defense).toBe(Config.cell.defense);
     expect(matrix.get(1, 9).health).toBe(0);
 
     // check increase in defense in non enemy cells
-    expect(matrix.get(2, 9).defense).toBeGreaterThan(10);
+    expect(matrix.get(2, 9).defense).toBeGreaterThan(Config.cell.defense);
     // check that cell gains health
     expect(matrix.get(2, 9).health).toBeGreaterThan(oldHealth);
 
-    expect(matrix.get(3, 9).defense).toBeGreaterThan(10);
+    expect(matrix.get(3, 9).defense).toBeGreaterThan(Config.cell.defense);
     // check that cell doesn't  overflow health limit
     expect(matrix.get(3, 9).health).toBe(100);
   });
@@ -108,7 +108,7 @@ describe('Piece', () => {
     }
 
     // check that dead cell remains dead
-    expect(matrix.get(0, 9).defense).toBe(10);
+    expect(matrix.get(0, 9).defense).toBe(Config.cell.defense);
     expect(matrix.get(0, 9).health).toBe(0);
 
     // check increase in defense in non enemy cells
@@ -132,7 +132,7 @@ describe('Piece', () => {
       killReporters,
     };
     Piece.applyEffect(ctx);
-    expect(matrix.get(9, 0).defense).toBe(10 + Config.pieceStats.ROOK.defense);
+    expect(matrix.get(9, 0).defense).toBe(Config.cell.defense + Config.pieceStats.ROOK.defense);
 
     ctx.row = 7;
     ctx.col = 2;

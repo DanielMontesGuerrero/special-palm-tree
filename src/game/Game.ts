@@ -70,7 +70,8 @@ export default class Game {
         this.board.matrix.getCountOfAliveCells(playerId),
         this.board.matrix.getTotalCountOfCells(),
       );
-      if (this.board.matrix.getCountOfAliveCells(playerId) === 0) {
+      if (this.board.isPlayerDead(playerId)) {
+        this.players[playerId].setDead();
         for (let notifyPlayerId = 0; notifyPlayerId < 4; notifyPlayerId++) {
           this.players[notifyPlayerId].messageManager.pushDeadPlayerMessage(
             playerId,
@@ -87,7 +88,10 @@ export default class Game {
   processEvents() {
     while (this.events.length > 0) {
       const event = Events.get(this.events[0].code);
-      if (event !== undefined) {
+      if (event === undefined) {
+        throw new Error('Invalid event code');
+      }
+      if (!this.players[this.events[0].playerId].isDead) {
         event.action({
           playerId: this.events[0].playerId,
           triggeredAt: this.events[0].triggeredAt,
@@ -97,8 +101,6 @@ export default class Game {
           board: this.board,
           arrows: this.board.arrows,
         });
-      } else {
-        throw new Error('Invalid event code');
       }
       this.events.shift();
     }

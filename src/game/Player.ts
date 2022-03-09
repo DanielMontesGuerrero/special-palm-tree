@@ -22,6 +22,8 @@ export default class Player {
 
   killReporter: KillReporter;
 
+  isDead: boolean;
+
   constructor(name: string, id: number) {
     this.name = name;
     this.id = id;
@@ -38,9 +40,15 @@ export default class Player {
     this.roulette = new Roulette();
     this.messageManager = new MessageManager(id);
     this.killReporter = new KillReporter();
+    this.isDead = false;
+  }
+
+  setDead() {
+    this.isDead = true;
   }
 
   changeActivePiece(type: PieceType) {
+    if (this.hand[type].quantity === 0) return;
     this.activePiece.isActive = false;
     this.activePiece = this.hand[type];
     this.activePiece.isActive = true;

@@ -78,37 +78,47 @@ export function gameOverview(game: Game) {
 }
 
 export function ballsOverview(board: Board) {
-  const matrix = new Array<string[]>(board.matrix.rows);
+  const matrix = new Array<string[]>(board.matrix.rows + 2);
   let matrixText = '';
   const ballChar = '*';
   const getCellFromPlayerId = (playerId: number) => {
     switch (playerId) {
-      case 0: return chalk.inverse.green(ballChar);
-      case 1: return chalk.inverse.yellow(ballChar);
-      case 2: return chalk.inverse.blue(ballChar);
-      case 3: return chalk.inverse.red(ballChar);
+      case 0: return chalk.green(ballChar);
+      case 1: return chalk.yellow(ballChar);
+      case 2: return chalk.blue(ballChar);
+      case 3: return chalk.red(ballChar);
       default: return chalk.inverse.white(ballChar);
     }
   };
   const setCell = (i: number, j: number, playerId: number) => {
-    if (matrix[i][j] === chalk.inverse.gray(ballChar)) {
+    if (matrix[i][j] === chalk(' ')) {
       matrix[i][j] = getCellFromPlayerId(playerId);
     } else {
-      matrix[i][j] = chalk.inverse.white(ballChar);
+      matrix[i][j] = chalk.white(ballChar);
     }
   };
   for (let i = 0; i < board.matrix.rows; i++) {
-    matrix[i] = new Array<string>(board.matrix.cols);
+    matrix[i + 1] = new Array<string>(board.matrix.cols + 2);
     for (let j = 0; j < board.matrix.cols; j++) {
-      matrix[i][j] = chalk.inverse.gray(ballChar);
+      matrix[i + 1][j + 1] = chalk(' ');
     }
+  }
+  matrix[0] = new Array<string>(board.matrix.cols + 2);
+  matrix[matrix.length - 1] = new Array<string>(board.matrix.cols + 2);
+  for (let i = 0; i < matrix.length; i++) {
+    matrix[i][0] = chalk.inverse.gray(' ');
+    matrix[i][matrix[0].length - 1] = chalk.inverse.gray(' ');
+  }
+  for (let i = 0; i < matrix[0].length; i++) {
+    matrix[0][i] = chalk.inverse.gray(' ');
+    matrix[matrix.length - 1][i] = chalk.inverse.gray(' ');
   }
   board.balls.forEach((playerBalls, index) => {
     playerBalls.forEach((ball) => {
-      setCell(Math.floor(ball.position.y), Math.floor(ball.position.x), index);
+      setCell(Math.floor(ball.position.y + 1), Math.floor(ball.position.x + 1), index);
     });
   });
-  for (let i = 0; i < board.matrix.rows; i++) {
+  for (let i = 0; i < matrix.length; i++) {
     matrixText += matrix[i].join('');
     matrixText += '\n';
   }

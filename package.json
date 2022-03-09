@@ -8,6 +8,7 @@
     "clean": "tsc --build --clean",
     "start": "npm run build && node build/scripts/runGame.js",
     "controls": "npm run build && node build/scripts/runGameControls.js",
+    "autocontrols": "npm run build && node build/scripts/runAutoGameControls.js",
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },

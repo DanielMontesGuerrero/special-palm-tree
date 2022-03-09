@@ -32,6 +32,11 @@ export default class Matrix {
     this.countOfAliveCells = [cellsPerPlayer, cellsPerPlayer, cellsPerPlayer, cellsPerPlayer];
   }
 
+  isKingDead(playerId: number) {
+    const playerCoords = this.getPlayerCoords(playerId);
+    return this.matrix[Math.floor(playerCoords.y)][Math.floor(playerCoords.x)].health <= 0;
+  }
+
   reportDeadCell(i: number, j: number, killReporter: KillReporter) {
     if (this.matrix[i][j].health <= 0 && !this.isMarkedAsDeadCell[i][j]) {
       killReporter.addKill();
