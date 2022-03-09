@@ -2,11 +2,7 @@ import Board from './Board';
 import Player from './Player';
 import {EnqueuedEvent, Events} from './Event';
 import {GamePhase, ScoreType} from './types';
-
-const DefaultVaules = {
-  rows: 42,
-  cols: 42,
-};
+import {Config} from '../config/config';
 
 export default class Game {
   board: Board;
@@ -23,15 +19,15 @@ export default class Game {
 
   phase: GamePhase;
 
-  static timeLimit = 180000;
+  static timeLimit = Config.timeLimit;
 
   constructor(players: string[]) {
-    this.board = new Board(DefaultVaules.rows, DefaultVaules.cols);
+    this.board = new Board(Config.rows, Config.cols);
     this.players = [];
     for (let i = 0; i < players.length; i++) {
       this.players.push(new Player(players[i], i));
     }
-    for (let i = players.length - 1; i < 4; i++) {
+    for (let i = players.length; i < 4; i++) {
       this.players.push(new Player(`bot ${i + 1}`, i));
     }
     this.events = [];
@@ -47,6 +43,12 @@ export default class Game {
       this.players[playerId].messageManager.pushStartMessage();
     }
     this.phase = GamePhase.RUNNING;
+  }
+
+  stop() {
+    this.phase = GamePhase.FINISHED;
+    this.endTime = Date.now();
+    this.winner = this.getPlayerWithGreatestScore();
   }
 
   addEvent(event: EnqueuedEvent) {
@@ -122,8 +124,7 @@ export default class Game {
   }
 
   checkTimeLimit() {
-    const gameTime = Date.now() - this.beginTime;
-    if (gameTime >= Game.timeLimit) {
+    if (this.getRunningTime() >= Game.timeLimit) {
       for (let playerId = 0; playerId < 4; playerId++) {
         this.players[playerId].messageManager.pushTimeLimitMessage();
       }
@@ -149,5 +150,23 @@ export default class Game {
       }
     }
     return playerId;
+  }
+
+  getWinner() {
+    if (this.winner === -1) {
+      return this.getPlayerWithGreatestScore();
+    }
+    return this.winner;
+  }
+
+  getRunningTime() {
+    if (this.phase === GamePhase.IDLE) {
+      return 0;
+    }
+    if (this.phase === GamePhase.RUNNING) {
+      return Date.now() - this.beginTime;
+    }
+
+    return this.endTime - this.beginTime;
   }
 }

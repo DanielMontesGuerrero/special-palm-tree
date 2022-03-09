@@ -1,4 +1,4 @@
-import Vector2 from '../src/models/Vector2';
+import Vector2 from '../src/game/Vector2';
 
 describe('Vector2', () => {
   test('add', () => {

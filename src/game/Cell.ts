@@ -1,14 +1,11 @@
-const DefaultVaules = {
-  health: 100,
-  defense: 10,
-};
+import {Config} from '../config/config';
 
 export default class Cell {
   health: number;
 
   defense: number;
 
-  constructor(health: number = DefaultVaules.health, defense: number = DefaultVaules.defense) {
+  constructor(health: number = Config.cell.health, defense: number = Config.cell.defense) {
     this.health = health;
     this.defense = defense;
   }

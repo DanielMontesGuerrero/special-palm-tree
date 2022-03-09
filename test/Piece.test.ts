@@ -1,7 +1,8 @@
-import KillReporter from '../src/models/KillReporter';
-import Matrix from '../src/models/Matrix';
-import Piece, {stats} from '../src/models/Piece';
-import {PieceType} from '../src/models/types';
+import {Config} from '../src/config/config';
+import KillReporter from '../src/game/KillReporter';
+import Matrix from '../src/game/Matrix';
+import Piece from '../src/game/Piece';
+import {PieceType} from '../src/game/types';
 
 describe('Piece', () => {
   test('applyEffect-QUEEN', () => {
@@ -23,7 +24,7 @@ describe('Piece', () => {
     // dead cell
     matrix.get(1, 9).health = 0;
     // cell with damage
-    matrix.get(2, 9).applyDamage(stats.QUEEN.attack);
+    matrix.get(2, 9).applyDamage(Config.pieceStats.QUEEN.attack);
     const oldHealth = matrix.get(2, 9).health;
     Piece.applyEffect(ctx);
     const enemyCellCoords = [
@@ -71,7 +72,7 @@ describe('Piece', () => {
     };
     matrix.get(9, 0).health = 10;
     Piece.applyEffect(ctx);
-    expect(matrix.get(9, 0).health).toBe(10 + stats.BISHOP.health);
+    expect(matrix.get(9, 0).health).toBe(10 + Config.pieceStats.BISHOP.health);
   });
 
   test('applyEffect-KNIGHT', () => {
@@ -93,7 +94,7 @@ describe('Piece', () => {
     // dead cell
     matrix.get(0, 9).health = 0;
     // cell with damage
-    matrix.get(9, 0).applyDamage(stats.KNIGHT.attack);
+    matrix.get(9, 0).applyDamage(Config.pieceStats.KNIGHT.attack);
     const oldHealth = matrix.get(9, 0).health;
     Piece.applyEffect(ctx);
     const nonEnemyCellCoords = [
@@ -131,7 +132,7 @@ describe('Piece', () => {
       killReporters,
     };
     Piece.applyEffect(ctx);
-    expect(matrix.get(9, 0).defense).toBe(10 + stats.ROOK.defense);
+    expect(matrix.get(9, 0).defense).toBe(10 + Config.pieceStats.ROOK.defense);
 
     ctx.row = 7;
     ctx.col = 2;

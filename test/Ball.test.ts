@@ -1,8 +1,8 @@
-import Ball from '../src/models/Ball';
-import KillReporter from '../src/models/KillReporter';
-import Matrix from '../src/models/Matrix';
-import {PieceType} from '../src/models/types';
-import Vector2 from '../src/models/Vector2';
+import Ball from '../src/game/Ball';
+import KillReporter from '../src/game/KillReporter';
+import Matrix from '../src/game/Matrix';
+import {PieceType} from '../src/game/types';
+import Vector2 from '../src/game/Vector2';
 
 describe('Ball', () => {
   test('move', () => {

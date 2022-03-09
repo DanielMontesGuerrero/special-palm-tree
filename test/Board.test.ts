@@ -1,9 +1,9 @@
-import Ball from '../src/models/Ball';
-import Board from '../src/models/Board';
-import KillReporter from '../src/models/KillReporter';
-import Piece from '../src/models/Piece';
-import {PieceType} from '../src/models/types';
-import Vector2 from '../src/models/Vector2';
+import Ball from '../src/game/Ball';
+import Board from '../src/game/Board';
+import KillReporter from '../src/game/KillReporter';
+import Piece from '../src/game/Piece';
+import {PieceType} from '../src/game/types';
+import Vector2 from '../src/game/Vector2';
 
 describe('Board', () => {
   test('releaseBalls', () => {

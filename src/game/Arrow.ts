@@ -1,20 +1,16 @@
+import {Config} from '../config/config';
 import Vector2 from './Vector2';
-
-export const DefaultVaules = {
-  angle: 0,
-  angularSpeed: Math.PI, // rad / s
-};
 
 export default class Arrow {
   angle: number;
 
   angularSpeed: number;
 
-  static maxAngularSpeed = 2 * Math.PI;
+  static maxAngularSpeed = Config.arrow.maxAngularSpeed;
 
   constructor(
-    angle: number = DefaultVaules.angle,
-    angularSpeed: number = DefaultVaules.angularSpeed,
+    angle: number = Config.arrow.angle,
+    angularSpeed: number = Config.arrow.angularSpeed,
   ) {
     this.angle = angle;
     this.angularSpeed = angularSpeed;

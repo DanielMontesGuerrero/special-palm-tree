@@ -1,9 +1,9 @@
 import Ball from './Ball';
-import {PieceType} from './types';
 import Piece from './Piece';
 import Arrow from './Arrow';
 import Board from './Board';
 import MessageManager from './MessageManager';
+import {RouletteSetsConfig} from '../config/config';
 
 export interface RouletteActionContext {
   hand: Piece[];
@@ -28,21 +28,6 @@ export default class RouletteOption {
     this.action = action;
   }
 }
-
-export const RouletteSetsConfig = {
-  DEFAULT: {
-    piecesProbabilities: [
-      {type: PieceType.QUEEN, probability: 0.1},
-      {type: PieceType.BISHOP, probability: 0.2},
-      {type: PieceType.KNIGHT, probability: 0.2},
-      {type: PieceType.ROOK, probability: 0.2},
-      {type: PieceType.PAWN, probability: 0.3},
-    ],
-    increasedAngularSpeed: 0.2,
-    increasedSpeed: 0.2,
-    increasedQuantity: 100,
-  },
-};
 
 export const RouletteSets = {
   DEFAULT: [

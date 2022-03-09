@@ -1,11 +1,11 @@
-import Board from '../src/models/Board';
-import {Events} from '../src/models/Event';
-import Player from '../src/models/Player';
-import Roulette from '../src/models/Roulette';
-import {EventCode, PieceType} from '../src/models/types';
+import Board from '../src/game/Board';
+import {Events} from '../src/game/Event';
+import Player from '../src/game/Player';
+import Roulette from '../src/game/Roulette';
+import {EventCode, PieceType} from '../src/game/types';
 
 describe('Event', () => {
-  test('ROULETTE_TRIGGERED', async () => {
+  test('TRIGGERED_ROULETTE', async () => {
     const players = [
       new Player('Player 1', 0),
       new Player('Player 2', 1),
@@ -21,7 +21,7 @@ describe('Event', () => {
       board,
       arrows: board.arrows,
     };
-    const event = Events.get(EventCode.ROULETTE_TRIGGERED);
+    const event = Events.get(EventCode.TRIGGERED_ROULETTE);
     expect(event).toBeDefined();
     event?.action(ctx);
     expect(players[0].roulette.lastTriggered).toBeCloseTo(oldTriggeredAt);
@@ -58,7 +58,7 @@ describe('Event', () => {
     expect(players[0].activePiece.type).toBe(PieceType.ROOK);
   });
 
-  test('RELEASE_PIECE', () => {
+  test('RELEASED_PIECE', () => {
     const players = [
       new Player('Player 1', 0),
       new Player('Player 2', 1),
@@ -74,7 +74,7 @@ describe('Event', () => {
       arrows: board.arrows,
     };
     players[0].hand[PieceType.QUEEN].quantity = 10;
-    const event = Events.get(EventCode.RELEASE_PIECE);
+    const event = Events.get(EventCode.RELEASED_PIECE);
     expect(event).toBeDefined();
     event?.action(ctx);
     expect(board.ballsToRelease[0].length).toBeGreaterThan(0);
@@ -95,7 +95,7 @@ describe('Event', () => {
       board,
       arrows: board.arrows,
     };
-    let event = Events.get(EventCode.ROULETTE_TRIGGERED);
+    let event = Events.get(EventCode.TRIGGERED_ROULETTE);
     expect(event).toBeDefined();
     expect(() => event?.action(ctx)).toThrowError('triggeredAt');
 
@@ -103,7 +103,7 @@ describe('Event', () => {
     expect(event).toBeDefined();
     expect(() => event?.action(ctx)).toThrowError('newActivePiece');
 
-    event = Events.get(EventCode.RELEASE_PIECE);
+    event = Events.get(EventCode.RELEASED_PIECE);
     expect(event).toBeDefined();
     expect(() => event?.action(ctx)).toThrowError('pieceType');
   });

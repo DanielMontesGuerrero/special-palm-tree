@@ -3,6 +3,7 @@ import Matrix from './Matrix';
 import {PieceType} from './types';
 import Piece from './Piece';
 import KillReporter from './KillReporter';
+import {Config} from '../config/config';
 
 export type BallContext = {
   matrix: Matrix,
@@ -24,7 +25,7 @@ export default class Ball {
 
   direction: Vector2;
 
-  static maxSpeed = 2;
+  static maxSpeed = Config.ball.maxSpeed;
 
   constructor(type: PieceType, position: Vector2, speed: number, direction: Vector2) {
     this.type = type;
