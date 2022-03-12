@@ -1,8 +1,9 @@
 {
-  "name": "darkness",
+  "name": "@danielmontes/darkness",
   "version": "1.0.0",
   "description": "Game motor",
-  "main": "index.js",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "tsc --build --clean",
@@ -10,7 +11,12 @@
     "controls": "npm run build && node build/scripts/runGameControls.js",
     "autocontrols": "npm run build && node build/scripts/runAutoGameControls.js",
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
