@@ -25,6 +25,10 @@ export default class Ball {
 
   direction: Vector2;
 
+  spawnedAt: number;
+
+  static maxLifetime = Config.ball.maxLifetime;
+
   static maxSpeed = Config.ball.maxSpeed;
 
   constructor(type: PieceType, position: Vector2, speed: number, direction: Vector2) {
@@ -32,6 +36,7 @@ export default class Ball {
     this.position = position;
     this.speed = speed;
     this.direction = direction.makeUnit();
+    this.spawnedAt = -1;
   }
 
   move(dt: number) {
@@ -61,6 +66,8 @@ export default class Ball {
 
   // returns true on collision
   update(dt: number, ctx: BallContext) {
+    if (this.spawnedAt === -1) this.spawnedAt = Date.now();
+    if ((Date.now() - this.spawnedAt) > Ball.maxLifetime) return true;
     this.move(dt);
     this.position.mod(ctx.matrix.cols, ctx.matrix.rows);
     if (this.checkCollision(ctx)) {

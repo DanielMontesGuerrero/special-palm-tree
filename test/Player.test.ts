@@ -32,6 +32,7 @@ describe('Player', () => {
 
   test('changeActivePiece', () => {
     const player = new Player('Player 1', 1);
+    player.hand[PieceType.QUEEN].quantity = 1;
     player.changeActivePiece(PieceType.QUEEN);
     expect(player.activePiece.type).toBe(PieceType.QUEEN);
   });

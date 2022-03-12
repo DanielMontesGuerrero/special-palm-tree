@@ -1,9 +1,9 @@
 import {PieceType} from '../game/types';
 
 export const Config = {
-  rows: 42,
-  cols: 42,
-  timeLimit: 180000,
+  rows: 38,
+  cols: 38,
+  timeLimit: 5 * 60 * 1000,
   numPlayers: 4,
   arrow: {
     angle: 0,
@@ -11,40 +11,41 @@ export const Config = {
     maxAngularSpeed: 2 * Math.PI,
   },
   roulette: {
-    rouletteDelay: 3000,
+    rouletteDelay: 3 * 1000,
   },
   ball: {
     maxSpeed: 2, // cells / second
     defaultSpeed: 1, // cells / sencond,
-    releaseDelay: 250,
+    releaseDelay: 100,
+    maxLifetime: 30 * 1000,
   },
   cell: {
     health: 100,
-    defense: 10,
+    defense: 5,
   },
   pieceStats: {
     QUEEN: {
-      attack: 80,
-      defense: 10,
-      health: 10,
+      attack: 75,
+      defense: 5,
+      health: 1,
     },
     KNIGHT: {
-      attack: 40,
+      attack: 55,
       defense: 0,
       health: 0,
     },
     BISHOP: {
       attack: 0,
       defense: 0,
-      health: 60,
+      health: 10,
     },
     ROOK: {
       attack: 0,
-      defense: 80,
+      defense: 35,
       health: 0,
     },
     PAWN: {
-      attack: 20,
+      attack: 35,
       defense: 0,
       health: 0,
     },
@@ -65,9 +66,9 @@ export const RouletteSetsConfig = {
   DEFAULT: {
     piecesProbabilities: [
       {type: PieceType.QUEEN, probability: 0.1},
-      {type: PieceType.BISHOP, probability: 0.2},
-      {type: PieceType.KNIGHT, probability: 0.2},
-      {type: PieceType.ROOK, probability: 0.2},
+      {type: PieceType.BISHOP, probability: 0.175},
+      {type: PieceType.KNIGHT, probability: 0.175},
+      {type: PieceType.ROOK, probability: 0.25},
       {type: PieceType.PAWN, probability: 0.3},
     ],
     increasedAngularSpeed: 0.2,

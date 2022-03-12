@@ -79,10 +79,14 @@ export default class Board {
     }
   }
 
+  isPlayerDead(playerId: number) {
+    return this.matrix.getCountOfAliveCells(playerId) === 0 || this.matrix.isKingDead(playerId);
+  }
+
   getAlivePlayers() {
     const playerIds = [];
     for (let id = 0; id < 4; id++) {
-      if (this.matrix.getCountOfAliveCells(id) > 0) {
+      if (!this.isPlayerDead(id)) {
         playerIds.push(id);
       }
     }

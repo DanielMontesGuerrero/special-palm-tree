@@ -60,6 +60,7 @@ export const Events = new Map([
     if (ctx.pieceType === undefined) {
       throw new Error('No pieceType in EventContext');
     }
+    if (ctx.players[ctx.playerId].hand[ctx.pieceType].quantity === 0) return;
     for (let i = 0; i < ctx.players.length; i++) {
       ctx.players[i].messageManager.pushPieceReleasedMessage(
         ctx.players[ctx.playerId].name,
