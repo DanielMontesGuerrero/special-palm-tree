@@ -17,7 +17,7 @@ export type EnqueuedEvent = {
   code: EventCode;
   playerId: number;
   triggeredAt?: number;
-  newActivePiece?: number;
+  newActivePiece?: PieceType;
   pieceType?: PieceType;
 };
 

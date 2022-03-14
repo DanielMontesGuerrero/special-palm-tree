@@ -1,8 +1,8 @@
 import {PieceType} from '../game/types';
 
 export const Config = {
-  rows: 38,
-  cols: 38,
+  rows: 10,
+  cols: 10,
   timeLimit: 5 * 60 * 1000,
   numPlayers: 4,
   arrow: {
@@ -21,13 +21,13 @@ export const Config = {
   },
   cell: {
     health: 100,
-    defense: 5,
+    defense: 10,
   },
   pieceStats: {
     QUEEN: {
-      attack: 75,
+      attack: 60,
       defense: 5,
-      health: 1,
+      health: 5,
     },
     KNIGHT: {
       attack: 55,
@@ -66,13 +66,13 @@ export const RouletteSetsConfig = {
   DEFAULT: {
     piecesProbabilities: [
       {type: PieceType.QUEEN, probability: 0.1},
-      {type: PieceType.BISHOP, probability: 0.175},
-      {type: PieceType.KNIGHT, probability: 0.175},
-      {type: PieceType.ROOK, probability: 0.25},
+      {type: PieceType.BISHOP, probability: 0.2},
+      {type: PieceType.KNIGHT, probability: 0.2},
+      {type: PieceType.ROOK, probability: 0.2},
       {type: PieceType.PAWN, probability: 0.3},
     ],
     increasedAngularSpeed: 0.2,
     increasedSpeed: 0.2,
-    increasedQuantity: 100,
+    increasedQuantity: 20,
   },
 };
