@@ -30,4 +30,8 @@ export default class Arrow {
   update(dt: number) {
     this.move(dt);
   }
+
+  static randomDirection() {
+    return Math.random() * 2 * Math.PI;
+  }
 }
