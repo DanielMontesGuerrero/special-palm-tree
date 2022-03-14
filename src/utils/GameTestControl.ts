@@ -114,6 +114,10 @@ const TriggerRouletteMenu = {
       playerId: answers.playerId,
       triggeredAt: Date.now(),
     });
+    socket.emit('gameEvent', {
+      code: EventCode.ACKNOWLEDGED_ROULETTE,
+      playerId: answers.playerId,
+    });
     MainMenu.init(socket);
   },
 };

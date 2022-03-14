@@ -19,6 +19,7 @@ export enum EventCode {
     TRIGGERED_ROULETTE,
     CHANGED_ACTIVE_PIECE,
     RELEASED_PIECE,
+    ACKNOWLEDGED_ROULETTE,
 }
 
 export enum ScoreType {

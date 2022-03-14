@@ -8,9 +8,15 @@ export default class Roulette {
 
   options: RouletteOption[];
 
+  locked: boolean;
+
+  selectedOption: number;
+
   constructor(options = RouletteSets.DEFAULT) {
     this.options = options;
     this.lastTriggered = 0;
+    this.locked = false;
+    this.selectedOption = -1;
   }
 
   getOption() {
@@ -26,12 +32,20 @@ export default class Roulette {
     return 0;
   }
 
-  onTrigger(ctx: RouletteActionContext) {
-    if ((ctx.triggeredAt - this.lastTriggered) >= Roulette.rouletteDelay) {
-      const selectedOption = this.getOption();
-      ctx.messageManager.pushRouletteOptionSelectedMessage(this.options[selectedOption].name);
-      this.options[selectedOption].action(ctx);
-      this.lastTriggered = ctx.triggeredAt;
+  onTrigger(triggeredAt: number) {
+    if ((triggeredAt - this.lastTriggered) >= Roulette.rouletteDelay && !this.locked) {
+      this.selectedOption = this.getOption();
+      this.locked = true;
+      this.lastTriggered = triggeredAt;
+    }
+  }
+
+  onAck(ctx: RouletteActionContext) {
+    if (this.selectedOption !== -1) {
+      ctx.messageManager.pushRouletteOptionSelectedMessage(this.options[this.selectedOption].name);
+      this.options[this.selectedOption].action(ctx);
+      this.locked = false;
+      this.selectedOption = -1;
     }
   }
 }

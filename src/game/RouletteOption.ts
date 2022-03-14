@@ -11,7 +11,6 @@ export interface RouletteActionContext {
   arrow: Arrow;
   board: Board;
   playerId: number;
-  triggeredAt: number;
   messageManager: MessageManager;
 }
 

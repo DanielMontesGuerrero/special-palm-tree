@@ -5,7 +5,7 @@ import Roulette from '../src/game/Roulette';
 import {EventCode, PieceType} from '../src/game/types';
 
 describe('Event', () => {
-  test('TRIGGERED_ROULETTE', async () => {
+  test('TRIGGERED_ROULETTE & ACKNOWLEDGED_ROULETTE', async () => {
     const players = [
       new Player('Player 1', 0),
       new Player('Player 2', 1),
@@ -22,6 +22,7 @@ describe('Event', () => {
       arrows: board.arrows,
     };
     const event = Events.get(EventCode.TRIGGERED_ROULETTE);
+    const ackEvent = Events.get(EventCode.ACKNOWLEDGED_ROULETTE);
     expect(event).toBeDefined();
     event?.action(ctx);
     expect(players[0].roulette.lastTriggered).toBeCloseTo(oldTriggeredAt);
@@ -32,6 +33,7 @@ describe('Event', () => {
     expect(players[0].roulette.lastTriggered).toBeCloseTo(oldTriggeredAt);
 
     ctx.triggeredAt += Roulette.rouletteDelay;
+    ackEvent?.action(ctx);
     event?.action(ctx);
     expect(players[0].roulette.lastTriggered)
       .toBeCloseTo(oldTriggeredAt + (3 * Roulette.rouletteDelay) / 2);

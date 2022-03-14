@@ -10,10 +10,15 @@ function sendRandomChangeActivePiece(socket: Socket) {
 }
 
 function sendRandomTriggerRoulette(socket: Socket) {
+  const playerId = Math.floor(4 * Math.random());
   socket.emit('gameEvent', {
     code: EventCode.TRIGGERED_ROULETTE,
-    playerId: Math.floor(4 * Math.random()),
+    playerId,
     triggeredAt: Date.now(),
+  });
+  socket.emit('gameEvent', {
+    code: EventCode.ACKNOWLEDGED_ROULETTE,
+    playerId,
   });
 }
 
