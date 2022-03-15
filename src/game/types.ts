@@ -32,3 +32,9 @@ export enum GamePhase {
     RUNNING,
     FINISHED,
 }
+
+export enum NodeType {
+    SELECTION,
+    ACTION,
+    SEQUENCE,
+}
