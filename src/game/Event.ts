@@ -17,7 +17,7 @@ export type EnqueuedEvent = {
   code: EventCode;
   playerId: number;
   triggeredAt?: number;
-  newActivePiece?: number;
+  newActivePiece?: PieceType;
   pieceType?: PieceType;
 };
 
@@ -37,15 +37,7 @@ export const Events = new Map([
     if (ctx.triggeredAt === undefined) {
       throw new Error('No triggeredAt in EventContext');
     }
-    ctx.players[ctx.playerId].roulette.onTrigger({
-      hand: ctx.players[ctx.playerId].hand,
-      activePiece: ctx.players[ctx.playerId].activePiece,
-      arrow: ctx.board.arrows[ctx.playerId],
-      board: ctx.board,
-      playerId: ctx.playerId,
-      triggeredAt: ctx.triggeredAt,
-      messageManager: ctx.players[ctx.playerId].messageManager,
-    });
+    ctx.players[ctx.playerId].roulette.onTrigger(ctx.triggeredAt);
   })],
   [
     EventCode.CHANGED_ACTIVE_PIECE,
@@ -74,4 +66,17 @@ export const Events = new Map([
     ctx.board.addBalls(ctx.playerId, ctx.players[ctx.playerId].hand[ctx.pieceType]);
     ctx.players[ctx.playerId].removePiece(ctx.pieceType);
   })],
+  [
+    EventCode.ACKNOWLEDGED_ROULETTE,
+    new Event(EventCode.ACKNOWLEDGED_ROULETTE, (ctx: EventContext) => {
+      ctx.players[ctx.playerId].roulette.onAck({
+        hand: ctx.players[ctx.playerId].hand,
+        activePiece: ctx.players[ctx.playerId].activePiece,
+        arrow: ctx.board.arrows[ctx.playerId],
+        board: ctx.board,
+        playerId: ctx.playerId,
+        messageManager: ctx.players[ctx.playerId].messageManager,
+      });
+    }),
+  ],
 ]);

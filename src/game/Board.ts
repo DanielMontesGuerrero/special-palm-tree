@@ -33,10 +33,10 @@ export default class Board {
       Config.ball.defaultSpeed,
     ];
     this.arrows = [
-      new Arrow(),
-      new Arrow(),
-      new Arrow(),
-      new Arrow(),
+      new Arrow(Arrow.randomDirection()),
+      new Arrow(Arrow.randomDirection()),
+      new Arrow(Arrow.randomDirection()),
+      new Arrow(Arrow.randomDirection()),
     ];
     this.lastBallReleasedAt = [0, 0, 0, 0];
     this.ballsToRelease = [[], [], [], []];
