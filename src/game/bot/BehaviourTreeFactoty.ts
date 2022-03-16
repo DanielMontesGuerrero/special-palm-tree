@@ -1,7 +1,10 @@
-import {NodeType} from '../types';
+import {randomBasicAction} from '../../config/behaviors/random';
 import BehaviorTree from './BehaviorTree';
-import Node from './Node';
 
 export default function createBehaviourTree(name: string) {
-  return new BehaviorTree(new Node(NodeType.ACTION, []));
+  switch (name) {
+    case 'random':
+    default:
+      return new BehaviorTree(randomBasicAction);
+  }
 }

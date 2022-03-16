@@ -21,4 +21,17 @@ export default class BehaviorTree {
     this.game = game;
     this.playerId = playerId;
   }
+
+  nextAction() {
+    if (this.playerId === undefined || this.game === undefined) {
+      throw new Error('No binded game');
+    }
+    const childIndex = this.currentNode.action({playerId: this.playerId, game: this.game});
+    const child = this.currentNode.childs[childIndex];
+    if (child === undefined) {
+      this.currentNode = this.tree;
+    } else {
+      this.currentNode = child;
+    }
+  }
 }
