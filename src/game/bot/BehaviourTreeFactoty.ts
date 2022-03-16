@@ -1,7 +1,9 @@
 import {randomBasicAction} from '../../config/behaviors/random';
 import BehaviorTree from './BehaviorTree';
 
-export default function createBehaviourTree(name: string) {
+type Behavior = 'random';
+
+export default function createBehaviourTree(name: Behavior) {
   switch (name) {
     case 'random':
     default:

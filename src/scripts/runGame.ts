@@ -31,3 +31,5 @@ setInterval(() => {
 setInterval(() => {
   gameHandler.update();
 }, gameTesterConfig.updateTime);
+
+setInterval(() => gameHandler.botActions(), gameTesterConfig.botActionDelay);
