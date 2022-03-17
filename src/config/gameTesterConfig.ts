@@ -3,5 +3,5 @@ export default {
   updateTime: 10,
   renderTime: 300,
   eventsDelay: 500,
-  botActionDelay: 800,
+  botActionDelay: 50,
 };

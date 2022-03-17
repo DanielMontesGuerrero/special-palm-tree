@@ -1,4 +1,6 @@
-import {changeActivePiece, releasePiece, triggerRoulette as trigger} from '../../game/bot/actions';
+import {
+  changeActivePiece, isRouletteAvailable, releasePiece, triggerRoulette as trigger,
+} from '../../game/bot/actions';
 import Node from '../../game/bot/Node';
 import {NodeType, PieceType} from '../../game/types';
 
@@ -54,8 +56,16 @@ export const changeToPawn: Node = {
   childs: [],
 };
 
-export const triggerRoulette: Node = {
+const triggerRouletteAction: Node = {
   type: NodeType.ACTION,
   action: trigger,
   childs: [],
 };
+
+export const triggerRoulette: Node = {
+  type: NodeType.SELECTION,
+  action: isRouletteAvailable,
+  childs: [],
+};
+
+triggerRoulette.childs = [triggerRoulette, triggerRouletteAction];
