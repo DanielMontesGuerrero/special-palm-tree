@@ -25,6 +25,7 @@ export enum EventCode {
 export enum ScoreType {
     KILL,
     PIECE_RELEASED,
+    ALIVE_CELL,
 }
 
 export enum GamePhase {

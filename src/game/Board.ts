@@ -92,4 +92,12 @@ export default class Board {
     }
     return playerIds;
   }
+
+  getCountOfAliveCellsPerPlayer() {
+    const count = [];
+    for (let playerId = 0; playerId < 4; playerId++) {
+      count.push(this.matrix.getCountOfAliveCells(playerId));
+    }
+    return count;
+  }
 }

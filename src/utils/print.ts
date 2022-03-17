@@ -58,8 +58,7 @@ function getPhaseName(phase: GamePhase) {
 }
 
 export function gameOverview(game: Game) {
-  const scores = game.players
-    .sort((a, b) => b.score - a.score);
+  const scores = game.getPlayersOrderedByScore();
   const texts = [];
   let gameTime = 'Not running';
   if (game.phase !== GamePhase.IDLE) {

@@ -4,7 +4,9 @@ import {NodeType} from '../../game/types';
 import {
   changeToBishop, changeToRook, triggerRoulette,
 } from './basic';
-import {increaseActivePieceQuantity, releaseActivePiece, releasePieceWithMostQuantity} from './utils';
+import {
+  increaseActivePieceQuantity, releaseActivePiece, releaseAllPieces, releasePieceWithMostQuantity,
+} from './utils';
 
 export const changeActivePieceToDefensivePiece: Node = {
   type: NodeType.SELECTION,
@@ -36,9 +38,10 @@ export const acquireDefensivePiece: Node = {
 
 export const defensiveBehavior: Node = {
   type: NodeType.SELECTION,
-  action: (ctx) => weightedRandomChoice(ctx, [4, 1]),
+  action: (ctx) => weightedRandomChoice(ctx, [4, 1, 1]),
   childs: [
     acquireDefensivePiece,
     releasePieceWithMostQuantity,
+    releaseAllPieces,
   ],
 };

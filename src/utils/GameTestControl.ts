@@ -256,6 +256,7 @@ const MainMenu = {
         'Change view',
         'Send event',
         'Stop',
+        'End Session',
       ],
     },
   ],
@@ -272,6 +273,9 @@ const MainMenu = {
       case 'Send event':
         inquirer.prompt(SendEventMenu.questions)
           .then((ans: SendEventAnswers) => SendEventMenu.handler(ans, socket));
+        break;
+      case 'End Session':
+        socket.emit('stop');
         break;
       default:
         socket.emit('stop');

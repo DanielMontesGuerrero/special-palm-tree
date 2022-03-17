@@ -51,6 +51,7 @@ export const Config = {
     },
   },
   score: {
+    aliveCellValue: 50000,
     killValue: 10000,
     pieceValue: {
       QUEEN: 3,

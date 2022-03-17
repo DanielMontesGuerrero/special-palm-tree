@@ -2,6 +2,7 @@ import BehaviorTree from '../game/bot/BehaviorTree';
 import createBehaviourTree from '../game/bot/BehaviourTreeFactoty';
 import {EnqueuedEvent} from '../game/Event';
 import Game from '../game/Game';
+import {GamePhase} from '../game/types';
 import OverviewType from './overviewType';
 import {
   ballsOverview, boardOverview, gameOverview, messagesOverview, playerOverview,
@@ -41,7 +42,9 @@ export default class GameHandler {
   }
 
   botActions() {
-    this.behaviorTrees.forEach((behaviorTree) => behaviorTree.nextAction());
+    if (this.game.phase === GamePhase.RUNNING) {
+      this.behaviorTrees.forEach((behaviorTree) => behaviorTree.nextAction());
+    }
   }
 
   start() {

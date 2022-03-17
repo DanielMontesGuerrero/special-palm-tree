@@ -54,7 +54,7 @@ export default class Player {
     this.activePiece.isActive = true;
   }
 
-  updateScore(type: ScoreType, piece: Piece | null = null) {
+  updateScore(type: ScoreType, piece: Piece | null = null, aliveCellsCount = 0) {
     const getPiceValue = (pieceType: PieceType) => {
       switch (pieceType) {
         case PieceType.QUEEN: return Config.score.pieceValue.QUEEN;
@@ -76,6 +76,9 @@ export default class Player {
         } else {
           this.score += piece.quantity * getPiceValue(piece.type);
         }
+        break;
+      case ScoreType.ALIVE_CELL:
+        this.score += Config.score.aliveCellValue * aliveCellsCount;
         break;
       default:
         break;
