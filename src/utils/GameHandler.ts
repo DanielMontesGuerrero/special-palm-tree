@@ -32,7 +32,7 @@ export default class GameHandler {
     this.behaviorTrees = [
       createBehaviourTree('random'),
       createBehaviourTree('random'),
-      createBehaviourTree('random'),
+      createBehaviourTree('atack'),
       createBehaviourTree('defense'),
     ];
     for (let playerId = 0; playerId < 4; playerId++) {

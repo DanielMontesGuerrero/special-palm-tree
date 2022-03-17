@@ -20,7 +20,7 @@ export const defend: Node = {
   action: () => -1,
   childs: [
     changeActivePieceToDefensivePiece,
-    increaseActivePieceQuantity,
+    increaseActivePieceQuantity(),
     releaseActivePiece,
   ],
 };

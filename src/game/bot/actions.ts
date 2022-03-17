@@ -101,3 +101,31 @@ export function releasePieceWithMostQuantity(ctx: ActionContext, lowerBound = 50
   });
   return releasePiece(ctx, pieceType);
 }
+
+export function releaseAllPieces(ctx: ActionContext) {
+  ctx.game.players[ctx.playerId].hand.forEach((piece) => {
+    releasePiece(ctx, piece.type);
+  });
+  return -1;
+}
+
+export function hasAtackPiece(ctx: ActionContext) {
+  const atackPieces = ctx.game.players[ctx.playerId].hand[PieceType.QUEEN].quantity
+  + ctx.game.players[ctx.playerId].hand[PieceType.KNIGHT].quantity;
+  if (atackPieces > 0) return 1;
+  return 0;
+}
+
+export function selectRandomAtackPiece(ctx: ActionContext) {
+  if (ctx.game.players[ctx.playerId].hand[PieceType.QUEEN].quantity > 0
+    && ctx.game.players[ctx.playerId].hand[PieceType.KNIGHT].quantity > 0) {
+    return randomChoice(ctx);
+  }
+  if (ctx.game.players[ctx.playerId].hand[PieceType.QUEEN].quantity > 0) {
+    return 0;
+  }
+  if (ctx.game.players[ctx.playerId].hand[PieceType.KNIGHT].quantity > 0) {
+    return 1;
+  }
+  return -1;
+}
