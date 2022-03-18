@@ -1,5 +1,8 @@
+import BehaviorTree from '../game/bot/BehaviorTree';
+import createBehaviourTree from '../game/bot/BehaviourTreeFactoty';
 import {EnqueuedEvent} from '../game/Event';
 import Game from '../game/Game';
+import {GamePhase} from '../game/types';
 import OverviewType from './overviewType';
 import {
   ballsOverview, boardOverview, gameOverview, messagesOverview, playerOverview,
@@ -19,12 +22,29 @@ export default class GameHandler {
 
   renderConfig: RenderConfig;
 
+  behaviorTrees: BehaviorTree[];
+
   constructor(game = new Game([])) {
     this.game = game;
     this.renderConfig = {
       overviewType: OverviewType.GAME,
       selectedPlayerId: 0,
     };
+    this.behaviorTrees = [
+      createBehaviourTree('random'),
+      createBehaviourTree('random'),
+      createBehaviourTree('atack'),
+      createBehaviourTree('defense'),
+    ];
+    for (let playerId = 0; playerId < 4; playerId++) {
+      this.behaviorTrees[playerId].bind(this.game, playerId);
+    }
+  }
+
+  botActions() {
+    if (this.game.phase === GamePhase.RUNNING) {
+      this.behaviorTrees.forEach((behaviorTree) => behaviorTree.nextAction());
+    }
   }
 
   start() {

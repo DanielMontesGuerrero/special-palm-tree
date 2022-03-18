@@ -25,10 +25,17 @@ export enum EventCode {
 export enum ScoreType {
     KILL,
     PIECE_RELEASED,
+    ALIVE_CELL,
 }
 
 export enum GamePhase {
     IDLE,
     RUNNING,
     FINISHED,
+}
+
+export enum NodeType {
+    SELECTION,
+    ACTION,
+    SEQUENCE,
 }

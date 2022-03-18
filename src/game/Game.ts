@@ -28,7 +28,7 @@ export default class Game {
       this.players.push(new Player(players[i], i));
     }
     for (let i = players.length; i < 4; i++) {
-      this.players.push(new Player(`bot ${i + 1}`, i));
+      this.players.push(new Player(`bot ${i}`, i));
     }
     this.events = [];
     this.beginTime = 0;
@@ -46,6 +46,7 @@ export default class Game {
   }
 
   stop() {
+    this.addAliveCellsToScores();
     this.phase = GamePhase.FINISHED;
     this.endTime = Date.now();
     this.winner = this.getPlayerWithGreatestScore();
@@ -130,6 +131,7 @@ export default class Game {
       for (let playerId = 0; playerId < 4; playerId++) {
         this.players[playerId].messageManager.pushTimeLimitMessage();
       }
+      this.addAliveCellsToScores();
       this.winner = this.getPlayerWithGreatestScore();
       for (let playerId = 0; playerId < 4; playerId++) {
         this.players[playerId].messageManager.pushWinnerMessage(
@@ -142,16 +144,20 @@ export default class Game {
     }
   }
 
-  getPlayerWithGreatestScore() {
-    let playerId = -1;
-    let maxScore = -1;
-    for (let id = 0; id < 4; id++) {
-      if (this.players[id].score > maxScore) {
-        maxScore = this.players[id].score;
-        playerId = id;
+  getPlayersOrderedByScore() {
+    const orderedPlayers = this.players.map((a) => a).sort((a, b) => {
+      if (a.isDead !== b.isDead) {
+        if (a.isDead) return 1;
+        if (b.isDead) return -1;
       }
-    }
-    return playerId;
+      return b.score - a.score;
+    });
+    return orderedPlayers;
+  }
+
+  getPlayerWithGreatestScore() {
+    const orderedPlayers = this.getPlayersOrderedByScore();
+    return orderedPlayers[0].id;
   }
 
   getWinner() {
@@ -170,5 +176,13 @@ export default class Game {
     }
 
     return this.endTime - this.beginTime;
+  }
+
+  addAliveCellsToScores() {
+    const countOfAliveCells = this.board.getCountOfAliveCellsPerPlayer();
+    this.players.forEach((player) => {
+      player.messageManager.pushTiebreakerMessage(countOfAliveCells[player.id]);
+      player.updateScore(ScoreType.ALIVE_CELL, null, countOfAliveCells[player.id]);
+    });
   }
 }

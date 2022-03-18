@@ -65,6 +65,10 @@ export default class MessageManager {
     this.messages.push(new Message('Time limit exceeded, who is the winner?'));
   }
 
+  pushTiebreakerMessage(aliveCellsCount: number) {
+    this.messages.push(new Message(`You ended with ${aliveCellsCount} alive cells`));
+  }
+
   static getPieceName(piece: Piece) {
     let name = '';
     switch (piece.type) {

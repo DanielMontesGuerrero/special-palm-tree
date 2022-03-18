@@ -55,7 +55,7 @@ export const RouletteSets = {
       ctx.activePiece.quantity += 10;
     }),
     new RouletteOption('-10', 0.1, (ctx: RouletteActionContext) => {
-      ctx.activePiece.quantity = Math.max(0, ctx.activePiece.quantity - 10);
+      ctx.activePiece.quantity = Math.max(1, ctx.activePiece.quantity - 10);
     }),
     new RouletteOption('Increase arrow speed', 0.1, (ctx: RouletteActionContext) => {
       ctx.arrow.angularSpeed = Math.min(
