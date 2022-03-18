@@ -1,6 +1,6 @@
 {
   "name": "@danielmontes/darkness",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Game motor",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EstebanOlmedo/special-palm-tree.git"
+    "url": "git+https://github.com/CatadoresDeAnime/special-palm-tree.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EstebanOlmedo/special-palm-tree/issues"
+    "url": "https://github.com/CatadoresDeAnime/special-palm-tree/issues"
   },
-  "homepage": "https://github.com/EstebanOlmedo/special-palm-tree#readme",
+  "homepage": "https://github.com/CatadoresDeAnime/special-palm-tree#readme",
   "devDependencies": {
     "@types/inquirer": "^8.2.0",
     "@types/jest": "^27.4.0",
