@@ -185,4 +185,8 @@ export default class Game {
       player.updateScore(ScoreType.ALIVE_CELL, null, countOfAliveCells[player.id]);
     });
   }
+
+  getNextMessage(playerId: number) {
+    return this.players[playerId].messageManager.getNextMessage();
+  }
 }

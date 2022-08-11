@@ -61,6 +61,21 @@ export const Config = {
       PAWN: 1,
     },
   },
+  messages: {
+    maxNumberOfMessagesInQueue: 5,
+    priorities: {
+      LOW: 1,
+      BASE: 10,
+      HIGH: 100,
+      VERY_HIGH: 1000,
+    },
+    maxWaitTime: {
+      LOW: 0.5 * 1000,
+      BASE: 1 * 1000,
+      HIGH: 2 * 1000,
+      VERY_HIGH: 3 * 1000,
+    },
+  },
 };
 
 export const RouletteSetsConfig = {

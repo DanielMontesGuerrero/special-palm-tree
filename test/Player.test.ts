@@ -20,7 +20,7 @@ describe('Player', () => {
     player.hand[PieceType.QUEEN].quantity = 50;
     player.changeActivePiece(PieceType.QUEEN);
     player.removePiece(PieceType.QUEEN);
-    expect(player.hand[PieceType.QUEEN].quantity).toBe(0);
+    expect(player.hand[PieceType.QUEEN].quantity).toBe(1);
     expect(player.hand[PieceType.QUEEN].isActive).toBe(false);
     expect(player.activePiece.type).toBe(PieceType.PAWN);
     expect(player.activePiece.quantity).toBe(1);

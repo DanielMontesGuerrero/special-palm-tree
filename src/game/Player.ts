@@ -86,10 +86,8 @@ export default class Player {
   }
 
   removePiece(type: PieceType) {
-    if (type === PieceType.PAWN) {
-      this.hand[type].quantity = 1;
-    } else {
-      this.hand[type].clear();
+    this.hand[type].quantity = 1;
+    if (type !== PieceType.PAWN) {
       this.changeActivePiece(PieceType.PAWN);
     }
   }
