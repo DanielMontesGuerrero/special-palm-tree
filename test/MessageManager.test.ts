@@ -1,6 +1,7 @@
+import {Config} from '../src/config/config';
 import MessageManager from '../src/game/MessageManager';
 import Piece from '../src/game/Piece';
-import {PieceType} from '../src/game/types';
+import {MessageType, PieceType} from '../src/game/types';
 
 describe('Message', () => {
   test('RouletteOptionSelected', () => {
@@ -71,5 +72,47 @@ describe('Message', () => {
     manager.pushTimeLimitMessage();
     expect(manager.messages.length).toBe(1);
     expect(manager.messages[0].content).toMatch(/.*Time limit exceeded.*/);
+  });
+
+  test('overrideRoulette', () => {
+    const manager = new MessageManager(0);
+    manager.pushOverrideRouletteAction('Take piece', 'x2', 'Too many pieces');
+    expect(manager.messages.length).toBe(1);
+    expect(manager.messages[0].content).toMatch(/.*ignored.*/);
+  });
+
+  test('messagePriority', async () => {
+    const manager = new MessageManager(0);
+    manager.pushPieceReleasedMessage('player 2', new Piece(PieceType.PAWN));
+    manager.pushRouletteOptionSelectedMessage('option');
+
+    // wait to push
+    // eslint-disable-next-line no-promise-executor-return
+    await new Promise((_) => setTimeout(_, Config.messages.maxWaitTime.LOW));
+
+    let message = manager.getNextMessage();
+    expect(message).toBeDefined();
+    if (message !== undefined) expect(message.type).toEqual(MessageType.WARNING);
+
+    message = manager.getNextMessage();
+    expect(message).toBeUndefined();
+
+    // wait for next message
+    // eslint-disable-next-line no-promise-executor-return
+    await new Promise((_) => setTimeout(_, Config.messages.maxWaitTime.LOW));
+    message = manager.getNextMessage();
+    expect(message).toBeDefined();
+    if (message !== undefined) expect(message.type).toEqual(MessageType.INFO);
+  });
+
+  test('purgeMessages', () => {
+    const manager = new MessageManager(0);
+    manager.pushPieceReleasedMessage('', new Piece(PieceType.PAWN));
+    manager.pushRouletteOptionSelectedMessage('');
+    manager.pushDeadPlayerMessage(1, '');
+    manager.pushDeadPlayerMessage(0, '');
+
+    manager.purgeMessages([Config.messages.priorities.LOW, Config.messages.priorities.BASE]);
+    expect(manager.messages.length).toEqual(2);
   });
 });
