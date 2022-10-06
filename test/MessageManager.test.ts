@@ -114,5 +114,6 @@ describe('Message', () => {
 
     manager.purgeMessages([Config.messages.priorities.LOW, Config.messages.priorities.BASE]);
     expect(manager.messages.length).toEqual(2);
+    expect(manager.messages[0].priority).toEqual(Config.messages.priorities.HIGH);
   });
 });

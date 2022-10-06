@@ -180,6 +180,6 @@ export function messagesOverview(player: Player) {
       text += '...';
     }
     return text;
-  }, 5));
+  }, 10));
   return texts.join('\n');
 }

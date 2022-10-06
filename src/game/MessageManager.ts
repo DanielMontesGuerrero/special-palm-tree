@@ -26,6 +26,8 @@ const getWaitTime = (message: Message | undefined) => {
 export default class MessageManager {
   messages: Message[];
 
+  lastMessage?: Message;
+
   notifiedHalfCellsAlive = false;
 
   notifiedNineCellsAlive = false;
@@ -135,12 +137,12 @@ export default class MessageManager {
   purgeMessages(prioritiesToPurge: number[]) {
     this.messages = this.messages.filter((message) => {
       const foundPriority = prioritiesToPurge.find((priority) => priority === message.priority);
-      return foundPriority !== undefined;
+      return foundPriority === undefined;
     });
   }
 
   getNextMessage(): Message | undefined {
-    let message;
+    let message = this.lastMessage;
     if (this.messages.length === 0) return message;
     const currentWaitTime = Date.now() - this.messages[0].startedWatingAt;
     if (this.messages.length > Config.messages.maxNumberOfMessagesInQueue) {
@@ -150,6 +152,7 @@ export default class MessageManager {
       message = this.pop();
       this.nextMessageWaitTime = getWaitTime(message);
     }
+    this.lastMessage = message;
     return message;
   }
 }
